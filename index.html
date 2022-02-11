@@ -4,49 +4,380 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pruebas</title>
+    <link rel="stylesheet" href="./src/styles/style.css">
+    <title>Data Warehouse</title>
 </head>
 <body>
-    <div>
-        <h2>LOGIN</h2>
-        <div>
-            <h4>Correo:</h4>
-            <input type="text" id="correo" placeholder="Correo">
-        </div>
-        <div>
-            <h4>Contraseña:</h4>
-            <input type="text" id="contrasena" placeholder="Contraseña">
-        </div>
-    </div>
-    <br>
-    <button id="ingresar">Ingresar</button>
-    <div>
-        <h2>NUEVO USUARIO</h2>
-        <div>
-            <h4>nombre:</h4>
-            <input type="text" id="nombreNewUser" placeholder="Nombre">
-        </div>
-        <div>
-            <h4>apellido:</h4>
-            <input type="text" id="apellidoNewUser" placeholder="apellido">
-        </div>
-        <div>
-            <h4>correo:</h4>
-            <input type="text" id="correoNewUser" placeholder="Correo">
-        </div>
-        <div>
-            <h4>Contraseña:</h4>
-            <input type="text" id="contrasenaNewUser" placeholder="Contraseña">
-        </div>
-        <div>
-            <h4>Perfil:</h4>
-            <input type="text" id="perfilNewUser" placeholder="Perfil">
-        </div>
-        <br>
-        <button id="signInButton">signIn</button>
-    </div>
-    
+    <header class="header">
+        <a href="./index.html" class="logo__header">
+            <img src="./src//img/headerIcon.png" alt="dataWarehouse" class="logoImg">
+        </a>
 
-    <script src="src/js/script.js"></script>
+        <nav class="menuHeader" id="menuHeader">
+            <a href="#" class="option__menuHeader" id="contactsButton">
+                Contactos
+            </a>    
+            <div class="line-decoration-2"></div> 
+
+            <a href="#" class="option__menuHeader" id="usersButton">
+                Usuarios
+            </a>
+            <div class="line-decoration-2"></div>   
+
+            <a href="#" class="option__menuHeader">
+                Compañias
+            </a>
+            <div class="line-decoration-2"></div>  
+
+            <a href="#" class="option__menuHeader">
+                Región / Ciudad
+            </a>
+            <div class="line-decoration-2"></div>  
+            
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="pageTitleContainer">
+            <div class="titleInputContainer">
+                <h1 class="pageTitle">Contactos</h1>
+            </div>
+            <input class="searchInput" type="text" placeholder="Buscar">
+            
+            <button class="newContact">Agregar contacto</button>
+        </div>
+
+        <div id="tablaContactos">
+            <div class="checkColumn"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+            <div class="columnTitle">Contacto</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Compañia</div>
+            <div class="columnTitle">Cargo</div>
+            <div class="columnTitle">Canal Preferido</div>
+            <div class="columnTitle">Interés</div>
+            <div class="columnTitle">Acciones</div>
+            
+            <!-- 
+                <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+                
+                
+            </div>
+
+            <div class="checkColumn"><input type="checkbox" name="checkContacto" ></div>
+            <div class="contactColumn">
+                <img class= "contactImg" src="./src/img/defaultContactIcon.png" alt="">
+                <div class="contactData">
+                    <p class="contactName">Fulanito Gonzalez</p>
+                    <p class="subtitle">fulanito@gmail.com</p>
+                </div>
+            </div>
+            <div class="textColumn">
+                <p>Argentina</p>
+                <p class="subtitle">Latam</p>
+            </div>
+            <div class="textColumn">
+                <p>Samsung</p>
+            </div>
+            <div class="textColumn">
+                <p>Jefe</p>
+            </div>
+            <div class="canalColumn textColumn">
+                <div class="canalContainer">
+                    <p class="canalName">Whatsapp</p>
+                </div>
+            </div>
+            <div class="interesColumn">
+                <p class="interesText">100%</p>
+                <div class="interesBar">
+                    <div class="interesBkg"></div>
+                </div>
+            </div>
+            <div class="actionsColumn">
+                <a class="editButton">
+                    <img src="./src/img/editIcon.png" alt="edit">
+                </a>
+                <a class="editButton">
+                    <img src="./src/img/deleteIcon.png" alt="edit">
+                </a>
+            </div> -->
+
+        </div>
+
+    </main>
+
+    <script src="/src/js/index.js"></script>
 </body>
 </html>

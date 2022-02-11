@@ -1,0 +1,13 @@
+@import "./sass/mixins";
+@import "./sass/variables";
+
+*{
+    @include format-document;
+}
+
+body{
+    background-color: $secondary-color;
+}
+
+@import "./sass/header";
+@import "./sass/main";

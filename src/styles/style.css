@@ -1,0 +1,463 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  list-style: none;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  outline: none;
+}
+
+body {
+  background-color: #ffffff;
+}
+
+.header {
+  width: 100%;
+  height: 10vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #0d093f;
+}
+
+.logo__header {
+  padding: 5px;
+  padding-left: 3%;
+}
+
+.logoImg {
+  width: 90%;
+}
+
+.titleImg {
+  margin-right: 30px;
+}
+
+.menuHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+      align-self: center;
+}
+
+.option__menuHeader {
+  margin-right: 40px;
+  color: #ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 16px;
+}
+
+.option__menuHeader:hover {
+  color: aqua;
+}
+
+@media screen and (max-width: 420px) {
+  .titleImg {
+    width: 50%;
+  }
+}
+
+.main {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 60px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background-color: #ffffff;
+}
+
+.pageTitleContainer {
+  width: 100%;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titleInputContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.searchInput {
+  border-radius: 30px;
+  border-color: #0d093f;
+  border-style: solid;
+  padding: 16px;
+  height: 20px;
+  width: 400px;
+}
+
+.newContact {
+  border-radius: 30px;
+  border-color: #0d093f;
+  background-color: #0d093f;
+  font-size: 12px;
+  color: white;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin-right: 32px;
+  border-style: solid;
+  height: 35px;
+  width: 120px;
+}
+
+.pageTitle {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+  color: #0d093f;
+  margin-left: 48px;
+}
+
+.loginContainer__main {
+  border-width: 5px;
+  border-color: #0d093f;
+  border-style: solid;
+  border-radius: 30px;
+  width: 30%;
+  height: 75vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #0d093f;
+}
+
+.opacityAnim {
+  -webkit-animation-name: welcome;
+          animation-name: welcome;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.opacityInverseAnim {
+  -webkit-animation-name: login;
+          animation-name: login;
+  -webkit-animation-duration: 300ms;
+          animation-duration: 300ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  opacity: 100;
+}
+
+@-webkit-keyframes welcome {
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes welcome {
+  100% {
+    opacity: 100;
+  }
+}
+
+@-webkit-keyframes login {
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes login {
+  100% {
+    opacity: 0;
+  }
+}
+
+.loginContainerTitle {
+  margin-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.loginContainer {
+  background-color: #0d093f;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.line-decoration {
+  margin-top: 25px;
+  width: 0;
+  height: 1px;
+  background-color: #ffffff;
+  -webkit-animation-name: lineAnim;
+          animation-name: lineAnim;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-delay: 200ms;
+          animation-delay: 200ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes lineAnim {
+  100% {
+    width: 65%;
+  }
+}
+
+@keyframes lineAnim {
+  100% {
+    width: 65%;
+  }
+}
+
+.titulo__loginContainer {
+  text-align: center;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.loginForm label, .loginButton {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: #ffffff;
+}
+
+.loginForm input {
+  background-color: #ffffff;
+  border-width: 1px;
+  border-color: #0d093f;
+  border-style: solid;
+  border-radius: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
+.loginButton {
+  background-color: transparent;
+  padding: 15px;
+  padding-left: 45px;
+  padding-right: 45px;
+  font-weight: bold;
+  border-style: solid;
+  border-color: #ffffff;
+  border-radius: 30px;
+  margin-bottom: 30px;
+}
+
+.loginButton:hover {
+  color: #0d093f;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.errorContainer {
+  width: 80%;
+  text-align: center;
+  color: red;
+}
+
+#tablaContactos {
+  margin: 20px auto;
+  width: 95%;
+  border-width: 2px;
+  border-color: #0d093f;
+  border-style: solid;
+  display: -ms-grid;
+  display: grid;
+  background-color: #0d093f;
+  -ms-grid-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
+      grid-template-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
+  grid-gap: 1px;
+}
+
+#tablaContactos > div {
+  background-color: #ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.checkColumn {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.checkInput {
+  margin: auto;
+}
+
+.columnTitle {
+  font-weight: 600;
+  text-align: center;
+}
+
+.contactColumn, .contactData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.contactImg {
+  width: 20%;
+}
+
+.contactData {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 60%;
+}
+
+.subtitle {
+  word-wrap: break-word;
+  font-size: 10px;
+  color: #646464;
+}
+
+.textColumn {
+  padding-left: 5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.canalContainer {
+  opacity: 70%;
+  padding: 3px;
+  color: white;
+}
+
+.canalName {
+  background-color: #0d093f;
+  text-align: center;
+  border-radius: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.interesColumn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.interesFatherDiv {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.interesBar {
+  width: 70%;
+  height: 20px;
+  margin-left: 6px;
+  border-radius: 30px;
+}
+
+.interesBkg {
+  width: 100%;
+  height: 20px;
+  background-color: green;
+  border-radius: 30px;
+}
+
+.actionsColumn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.editButton, .deleteButton {
+  width: 30%;
+}
+
+.actionsColumn img {
+  width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .loginContainer__main {
+    width: 50%;
+  }
+}
+/*# sourceMappingURL=style.css.map */

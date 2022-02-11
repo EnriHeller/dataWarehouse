@@ -22,9 +22,21 @@ Paises.belongsTo(Regiones, {
 Companias.belongsTo(Ciudades, {
     foreignKey: "ciudades_id",
 });
+Companias.belongsTo(Regiones, {
+    foreignKey: "regiones_id",
+});
+Companias.belongsTo(Paises, {
+    foreignKey: "paises_id",
+});
 
 Contactos.belongsTo(Ciudades, {
     foreignKey: "ciudades_id",
+});
+Contactos.belongsTo(Paises, {
+    foreignKey: "paises_id",
+});
+Contactos.belongsTo(Regiones, {
+    foreignKey: "regiones_id",
 });
 
 Contactos.belongsTo(Companias, {

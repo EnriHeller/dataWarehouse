@@ -199,9 +199,9 @@ const adminValidation = async (req, res, next)=>{
 }
 
 const limiter = rateLimit({
-    windowMs: 60 * 1000, //60 segundos
+    windowMs: 120 * 1000, //60 segundos
     max: 5,
-    message: "Excediste el numero de peticiones intenta mas tarde",
+    message: "Excediste el numero de peticiones, intenta mas tarde",
 });
 
 ////GlOBAL MIDDLEWARES
@@ -230,8 +230,7 @@ server.use(
 
 //SIGN IN
 server.post("/signIn",signInValidation, adminValidation, async (req, res)=>{
-    const newUser = {nombre, apellido, correo, perfil, contrasena} = req.body;
-    
+    const newUser = {nombre, apellido, correo, perfil, contrasena, esAdmin} = req.body;
     Usuarios.create(newUser)
     .then(()=>{
         res.status(200);
@@ -247,25 +246,21 @@ server.post("/signIn",signInValidation, adminValidation, async (req, res)=>{
 server.post("/logIn",limiter, async(req, res) =>{
     const {posibleCorreo, posibleContrasena} = req.body;
 
-    try {
-        const posibleUsuario = await Usuarios.findOne({
-            where: {correo: posibleCorreo, contrasena: posibleContrasena}
-        });
+    const posibleUsuario = await Usuarios.findOne({
+        where: {correo: posibleCorreo, contrasena: posibleContrasena}
+    });
 
-        if(posibleUsuario){
-            const token = jwt.sign(
-                {id: posibleUsuario.id},
-                JWT_SECRET,
-                {expiresIn: "24h"}
-            );
-            res.status(200).json(token);
-        }else{
-            res.status(401).json("correo o contraseña invalidos. Intente nuevamente");
-        }
-    } catch (error) {
-        res.status(500);
-        res.json(error.message);
+    if(posibleUsuario){
+        const token = jwt.sign(
+            {id: posibleUsuario.id},
+            JWT_SECRET,
+            {expiresIn: "24h"}
+        );
+        res.status(200).json(token);
+    }else{
+        res.status(401).json("Correo o contraseña invalidos. Intente nuevamente")
     }
+    
 })
 
 //OBTENER TODOS LOS USUARIOS
@@ -594,6 +589,7 @@ server.delete("/ciudades/:id",adminValidation, async (req,res) =>{
             const contactosCiudad = await Contactos.findAll({
                 where:{ciudades_id: idCiudad}
             })
+        
 
             const contactosId = contactosCiudad.map(contacto =>{
                 return contacto.id
@@ -688,21 +684,21 @@ server.get("/buscar/:input", async (req, res)=>{
 
 //BUSCADOR PAIS
 server.get("/buscadorPorPaises/:input", async(req,res)=>{
-  const input = req.params.input
-  try{
+const input = req.params.input
+try{
     const pais= await Paises.findOne({
-      where: {nombre: input}}
-     );
+        where: {nombre: input}}
+    );
     const content  = pais.id
 
     const ciudades = await Ciudades.findAll({
-      where: {paises_id: content}}
-     );
-     const ciudadesId  = ciudades.map(ciudad=>{
-          return ciudad.id
-     })
+        where: {paises_id: content}}
+    );
+    const ciudadesId  = ciudades.map(ciudad=>{
+        return ciudad.id
+    })
 
-     const contactos = await Contactos.findAll({
+    const contactos = await Contactos.findAll({
         where:{ciudades_id :ciudadesId},
         include: [
             { model: Canales, attributes: ["id", "nombre"] },
@@ -711,9 +707,9 @@ server.get("/buscadorPorPaises/:input", async(req,res)=>{
         ],
     })
 
-     await Promise.all([pais, ciudades, ciudadesId]).then(
-      res.status(200).json(contactos)
-     );
+    await Promise.all([pais, ciudades, ciudadesId]).then(
+        res.status(200).json(contactos)
+    );
 
   }catch(error){
     res.status(400).json(error.message)
@@ -757,12 +753,26 @@ server.get("/buscadorPorCanales/:input", async(req,res)=>{
 
 //NUEVO CONTACTO
 server.post("/contactos/", contactoValidation, async (req, res)=>{
-    const {nombre, apellido, correo, cargo, imagen, interes, ciudades_id, companias_id, usuarios_id} = req.body;
+    const {nombre, apellido, correo, cargo, imagen, interes, ciudades_id, companias_id} = req.body;
     const canales = req.body.canales
+    const usuarios_id = req.user.id
     
     try {
+        const ciudad = await Ciudades.findOne({where:{id: ciudades_id }})
+        const pais = await Paises.findOne({where:{id: ciudad.paises_id }})
+        const region = await Regiones.findOne({where:{id: pais.regiones_id }})
         const nuevoContacto = await Contactos.create({
-            nombre, apellido, correo, cargo, imagen, interes, ciudades_id, companias_id, usuarios_id
+            nombre,
+            apellido,
+            correo,
+            cargo,
+            imagen,
+            interes,
+            ciudades_id,
+            paises_id: pais.id,
+            regiones_id: region.id,
+            companias_id,
+            usuarios_id
         })
         await Promise.all(canales.map(async (canal)=>{
     
@@ -778,6 +788,39 @@ server.post("/contactos/", contactoValidation, async (req, res)=>{
         }));
 
         res.status(200).json("Contacto creado con éxito")
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+});
+
+//BORRAR CONTACTO
+server.delete("/contactos/:id", async (req,res) =>{
+    const idContacto = req.params.id;
+    
+    try {
+
+        const posibleContacto= await Contactos.findOne({
+            where: {
+                id:idContacto,
+            }
+        })
+    
+        if(!posibleContacto){
+            res.status(404).json({
+                error: `No existe contacto con id ${idContacto}`
+            });
+        }else{  
+            
+            await ContactosHasCanales.destroy({
+                where: {contacto_id: idContacto}
+            })
+            await Contactos.destroy({
+                where: {id: idContacto}
+            })
+
+        } 
+    
+        res.status(200).json(`Se ha eliminado a ${posibleContacto.nombre} ${posibleContacto.apellido} con éxito`);
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -839,12 +882,12 @@ server.post("/companias", adminValidation,async (req,res) =>{
         telefono,
         ciudades_id
     });
-  
+
     res.status(201).json(nuevaCompania);}
     catch(error){
-     res.status(400).json({error:error.message});
+        res.status(400).json({error:error.message});
     }
-  });
+});
 
 //MODIFICAR COMPANIA
 server.put("/companias/:id", adminValidation, async(req,res)=>{
@@ -860,43 +903,91 @@ server.put("/companias/:id", adminValidation, async(req,res)=>{
   })
 
 //TRAER COMPANIAS
-server.get("/companias/", async(req,res)=>{
-    const companias = await Companias.findAll();
-    res.status(200).json(companias)
-});
+server.get("/companias", adminValidation, async(req,res)=>{
+    try{
+      const arrayCompanias = await Companias.findAll({
+        include:[
+          {model: Ciudades, attributes: ["nombre"]},
+          {model: Paises, attributes: ["nombre"]},
+          {model: Regiones, attributes: ["nombre"]}
+        ]
+      })
+      res.status(200).json(arrayCompanias)
+    } catch(error){
+      res.status(400).json(error.message)
+    }
+  })
 
 //MODIFICAR CONTACTO
 server.put("/contactos/:id", async(req,res)=>{
     idContacto = req.params.id;
-    const {nombre, apellido, cargo,correo,imagen,ciudades_id, companias_id,} = req.body;
-   
+    const {
+        nombre,
+        apellido,
+        cargo,
+        correo,
+        imagen,
+        ciudades_id,
+        companias_id,
+    } = req.body;
+
     try {
         
-      await Contactos.update({nombre, apellido, cargo,correo,imagen,ciudades_id, companias_id}, {where:{id: idContacto}});
         
-      const contacto = await Contactos.findOne({where: {id: idContacto}});
-  
-        if(contacto){
-          res.status(200).json(contacto)
-        }else{
-          throw new Error("no existe contacto con ese id")
+    await Contactos.update({
+        nombre,
+        apellido,
+        cargo,
+        correo,
+        imagen,
+        ciudades_id,
+        companias_id,
+        },
+        {where:{id: idContacto}});
+
+        
+    
+        if(ciudades_id){
+            const ciudad = await Ciudades.findOne({where:{id: ciudades_id }})
+            const pais = await Paises.findOne({where:{id: ciudad.paises_id }})
+            const region = await Regiones.findOne({where:{id: pais.regiones_id }})
+
+            await Contactos.update({
+            regiones_id: region.id,
+            paises_id: pais.id
+            },
+            {where:{id: idContacto}});
         }
-        
+        const contacto = await Contactos.findOne({
+            where: {id: idContacto},
+            include:{model:Canales}
+        });
+
+        if(contacto){
+            res.status(200).json(contacto)
+        }else{
+            throw new Error("No existe contacto con ese id")
+        }
+
     } catch (error) {
         res.status(400).json({error: error.message})
     }
   })
 
   //MODIFICAR CONTACTOS HAS CANALES (INTERES, CANALES, PREFERENCIAS)
-  server.put("/contactosHasCanales/:idContacto", async(req,res)=>{
-      const idContacto = req.params.idContacto
-      const {interes,preferencias, canale_id, cuenta } = req.body;
+    server.put("/contactosHasCanales/:idContacto/:idCanal", async(req,res)=>{
+        const idContacto = req.params.idContacto
+        const idCanal = req.params.idCanal
+        const {interes,preferencias, canale_id, cuenta } = req.body;
       try {
           await ContactosHasCanales.update({
-              preferencias,interes, canale_id, cuenta
-          },
-          {where: {contacto_id: idContacto}}
-          )
+            preferencias,interes, canale_id, cuenta
+        },
+        {where: {
+            contacto_id: idContacto,
+            canale_id: idCanal
+        }}
+        )
 
         const contacto = await Contactos.findOne({
             where:{id: idContacto},
@@ -908,21 +999,24 @@ server.put("/contactos/:id", async(req,res)=>{
       } catch (error) {
         res.status(400).json(error.message)
       }
-  })
-  
+})
+
 
 
 //OBTENER TODOS LOS CONTACTOS
 server.get("/contactos", adminValidation, async(req,res)=>{
     try{
-    const arrayContactos = await Contactos.findAll({
-        include: [
-            { model: Canales},
-            { model: Ciudades, attributes: ["nombre"] },
-            { model: Companias, attributes: ["nombre"]},
+        const arrayContactos = await Contactos.findAll({
+        where:{usuarios_id: req.user.id},
+        include:[
+            {model: Canales},
+            {model: Ciudades, attributes: ["nombre"]},
+            {model: Paises, attributes: ["nombre"]},
+            {model: Regiones, attributes: ["nombre"]},
+            {model: Companias, attributes: ["nombre"]},
         ]
     })
-    
+
         res.status(200).json(arrayContactos)
     } catch(error){
         res.status(400).json(error.message)
@@ -933,8 +1027,8 @@ server.get("/contactos", adminValidation, async(req,res)=>{
 server.get("/canales/", async(req,res)=>{
     const canales = await Canales.findAll();
     res.status(200).json(canales)
-  });
-  
+});
+
   // MODIFICAR UN CANAL
   server.put("/canales/:id", adminValidation, async(req,res)=>{
     const idCanal = req.params.id;
@@ -948,7 +1042,7 @@ server.get("/canales/", async(req,res)=>{
     }
     })
 
-  // AGREGAR CANAL
+  //AGREGAR CANAL 
     server.post("/canales", adminValidation, async (req,res) =>{
     try{const {nombre} = req.body;
     const nuevoCanal = await Canales.create({
@@ -971,7 +1065,7 @@ server.delete("/canales/:id", async (req,res) =>{
                 id:idCanal,
             }
         })
-      
+        
         if(!posibleCanal){
             res.status(404).json({
                 error: `No existe canal con id ${idCanal}`

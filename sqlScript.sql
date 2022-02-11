@@ -28,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `data-warehouse`.`usuarios` (
   `perfil` VARCHAR(45) NOT NULL,
   `contrasena` VARCHAR(450) NOT NULL,
   `esAdmin` TINYINT(1) NOT NULL DEFAULT 0,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -40,8 +40,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `data-warehouse`.`regiones` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(400) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -52,8 +52,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `data-warehouse`.`paises` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(450) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   `regiones_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_paises_regiones_idx` (`regiones_id` ASC),
@@ -71,8 +71,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `data-warehouse`.`ciudades` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(450) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   `paises_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_ciudades_paises1_idx` (`paises_id` ASC),
@@ -88,17 +88,22 @@ ENGINE = InnoDB;
 -- Table `data-warehouse`.`companias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `data-warehouse`.`companias` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(450) NOT NULL,
   `direccion` VARCHAR(450) NOT NULL,
   `correo` VARCHAR(450) NOT NULL,
   `telefono` VARCHAR(45) NOT NULL,
-`ciudades_id` INT NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `ciudades_id` INT(11) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `paises_id` INT(11) NOT NULL,
+  `regiones_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_contactos_ciudades1_idx` (`ciudades_id` ASC))
-  ENGINE = InnoDB;
+  INDEX `fk_contactos_ciudades1_idx` (`ciudades_id` ASC),
+  INDEX `fk_companias_paises1_idx` (`paises_id` ASC) ,
+  INDEX `fk_companias_regiones1_idx` (`regiones_id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -110,19 +115,33 @@ CREATE TABLE IF NOT EXISTS `data-warehouse`.`contactos` (
   `apellido` VARCHAR(450) NOT NULL,
   `cargo` VARCHAR(450) NOT NULL,
   `correo` VARCHAR(450) NOT NULL,
-  `imagen` VARCHAR(2000) NULL DEFAULT NULL,
-  `updated_at` DATETIME NOT NULL,
-  `created_at` DATETIME NOT NULL,
+  `imagen` VARCHAR(20000) NULL DEFAULT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   `ciudades_id` INT NOT NULL,
+  `paises_id` INT NOT NULL,
+  `regiones_id` INT NOT NULL,
   `companias_id` INT NOT NULL,
   `usuarios_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_contactos_ciudades1_idx` (`ciudades_id` ASC),
+  INDEX `fk_contactos_paises1_idx` (`paises_id` ASC),
+  INDEX `fk_contactos_regiones1_idx` (`regiones_id` ASC),
   INDEX `fk_contactos_companias1_idx` (`companias_id` ASC),
   INDEX `fk_contactos_usuarios1_idx` (`usuarios_id` ASC),
   CONSTRAINT `fk_contactos_ciudades1`
     FOREIGN KEY (`ciudades_id`)
     REFERENCES `data-warehouse`.`ciudades` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `fk_contactos_paises1`
+    FOREIGN KEY (`paises_id`)
+    REFERENCES `data-warehouse`.`paises` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `fk_contactos_regiones1`
+    FOREIGN KEY (`regiones_id`)
+    REFERENCES `data-warehouse`.`regiones` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_contactos_companias1`
@@ -144,8 +163,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `data-warehouse`.`canales` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(450) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -158,8 +177,8 @@ CREATE TABLE IF NOT EXISTS `data-warehouse`.`contactos_has_canales` (
   `canale_id` INT NOT NULL,
   `interes` ENUM("0", "25", "50", "75", "100") NOT NULL DEFAULT '0',
   `cuenta` VARCHAR(450) NOT NULL,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
   `preferencias` ENUM("NO MOLESTAR", "ACTIVO", "EN EL TRABAJO", "AUSENTE") NOT NULL DEFAULT 'ACTIVO',
   PRIMARY KEY (`contacto_id`, `canale_id`),
   INDEX `fk_contactos_has_canales_canales1_idx` (`canale_id` ASC),
@@ -182,8 +201,8 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-
-INSERT INTO `data-warehouse`.`usuarios` (`nombre`, `apellido`, `correo`, `perfil`, `contrasena`, `esAdmin`) VALUES ('admin', 'admin', 'admin', 'admin', 'admin123', '1');
+INSERT INTO `data-warehouse`.`usuarios` (`nombre`, `apellido`, `correo`, `perfil`, `contrasena`, `esAdmin`)
+ VALUES ('admin', 'admin', 'admin', 'admin', 'admin123', '1');
 
 INSERT INTO regiones(nombre, created_at, updated_at)
 VALUES("Norteamerica", NOW(),NOW());
@@ -414,12 +433,12 @@ VALUES("Nakuru", NOW(),NOW(),25);
 INSERT INTO ciudades(nombre, created_at, updated_at,paises_id)
 VALUES("Thika", NOW(),NOW(),25);
 
-INSERT INTO companias(nombre, direccion, correo, telefono, created_at, updated_at, ciudades_id)
-VALUES("Asus","Calle123", "asus@asus","123456789", NOW(),NOW(),1);
-INSERT INTO companias(nombre, direccion, correo, telefono, created_at, updated_at, ciudades_id)
-VALUES("Apple","Calle123", "apple@apple","123456789", NOW(),NOW(),5);
-INSERT INTO companias(nombre, direccion, correo, telefono, created_at, updated_at, ciudades_id)
-VALUES("Tesla","Calle123", "tesla@tesla","123456789", NOW(),NOW(),5);
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `ciudades_id`, `created_at`, `paises_id`, `regiones_id`) VALUES ('Samsung', 'Calle 123', 'samsung@mail.com', '11202020', '1', '', '1', '1');
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `ciudades_id`, `paises_id`, `regiones_id`) VALUES ('Motorola', 'Calle 345', 'motorola@mail.com', '11202020', '1', '1', '1');
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `ciudades_id`, `paises_id`, `regiones_id`) VALUES ('LG', 'Calle 678', 'lg@mail.com', '11202020', '1', '1', '1');
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `ciudades_id`, `paises_id`, `regiones_id`) VALUES ('Xiaomi', 'Calle789', 'xiaomi@mail.com', '11202020', '1', '1', '1');
+
+
 INSERT INTO canales(nombre, created_at, updated_at)
 VALUES("Facebook", NOW(),NOW());
 INSERT INTO canales(nombre, created_at, updated_at)
@@ -433,5 +452,11 @@ VALUES("Slack", NOW(),NOW());
 
 select * from usuarios;
 select * from paises;
+select * from regiones;
 select * from canales;
 select * from contactos;
+select * from companias;
+select * from ciudades;
+select * from contactos_has_canales;
+
+

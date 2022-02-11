@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/styles/style.css">
+    <title>Pruebas</title>
+</head>
+<body>
+    <header class="header">
+        <a href="./index.html" class="logo__header">
+            <img src="./src//img/headerIcon.png" alt="dataWarehouse" class="logoImg">
+        </a>
+        <img src="./src//img/titleHeader.png" alt="dataWarehouse" class="titleImg opacityAnim">
+
+    </header>
+
+    <main class="main">
+        <section class="loginContainer__main opacityAnim">
+            <div class="loginContainerTitle">
+                <h2 class="titulo__loginContainer">Te damos la bienvenida</h1>
+                    <div class="line-decoration"></div>
+                
+            </div>
+            <form class="loginForm">
+                <div class="loginContainer" id="correoContainer">
+                    <label for="inputCorreo">Correo</label>
+                    <br>
+                    <input type="text" name="correo" id="inputCorreo" autocomplete="true" >
+                </div>
+                <br>
+                <div class="loginContainer">
+                    <label for="inputContrasena">Contraseña</label>
+                    <br>
+                    <input type="password" name="contrasena" id="inputContrasena" autocomplete="false" >
+                </div>
+            </form>
+            <p class="errorContainer"></p>
+            <button class="loginButton" id="loginButton">Ingresar</button>
+        </section>
+    </main>
+    <script src="src/js/login.js"></script>
+</body>
+</html>
