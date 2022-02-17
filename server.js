@@ -174,7 +174,7 @@ const contactoValidation = async (req, res, next) => {
         }
     }else if(!ciudadInDb){
         res.status(401);
-            res.json({error: "No existe la ciudad especificada"})
+            res.json({error: "Debe especificar la ciudad para continuar"})
     }else{
         next()
     }
@@ -221,12 +221,6 @@ server.use(
 );  
 
 ////ENDPOINTS
-
-/*  
-    usuario admin:
-    correo: admin@gmail.com
-    contrasena: admin123
-*/
 
 //SIGN IN
 server.post("/signIn",signInValidation, adminValidation, async (req, res)=>{
@@ -668,17 +662,9 @@ server.get("/buscar/:input", async (req, res)=>{
         { model: Companias, attributes: ["nombre"] },
     ],
     })
-    let compania= await  Contactos.findAll({
-    where: {companias_id: input},
-    include: [
-        { model: Canales, attributes: ["id", "nombre"] },
-        { model: Ciudades, attributes: ["nombre"] },
-        { model: Companias, attributes: ["nombre"] },
-    ], 
-    })
     
-    await Promise.all([correo, apellido, cargo, nombre, compania]).then(
-    res.status(200).json([correo, apellido, cargo, nombre, compania])
+    await Promise.all([correo, apellido, cargo, nombre]).then(
+    res.status(200).json([correo, apellido, cargo, nombre])
     )
 })
 
@@ -689,27 +675,33 @@ try{
     const pais= await Paises.findOne({
         where: {nombre: input}}
     );
-    const content  = pais.id
 
-    const ciudades = await Ciudades.findAll({
-        where: {paises_id: content}}
-    );
-    const ciudadesId  = ciudades.map(ciudad=>{
-        return ciudad.id
-    })
+    if(pais){
+        const content  = pais.id
 
-    const contactos = await Contactos.findAll({
-        where:{ciudades_id :ciudadesId},
-        include: [
-            { model: Canales, attributes: ["id", "nombre"] },
-            { model: Ciudades, attributes: ["nombre"] },
-            { model: Companias, attributes: ["nombre"] },  
-        ],
-    })
+        const ciudades = await Ciudades.findAll({
+            where: {paises_id: content}}
+        );
+        const ciudadesId  = ciudades.map(ciudad=>{
+            return ciudad.id
+        })
 
-    await Promise.all([pais, ciudades, ciudadesId]).then(
-        res.status(200).json(contactos)
-    );
+        const contactos = await Contactos.findAll({
+            where:{ciudades_id :ciudadesId},
+            include: [
+                { model: Canales, attributes: ["id", "nombre"] },
+                { model: Ciudades, attributes: ["nombre"] },
+                { model: Companias, attributes: ["nombre"] },  
+            ],
+        })
+
+        await Promise.all([pais, ciudades, ciudadesId]).then(
+            res.status(200).json(contactos)
+        );
+    }else{
+        res.status(200).json([])
+    }
+    
 
   }catch(error){
     res.status(400).json(error.message)
@@ -723,37 +715,146 @@ server.get("/buscadorPorCanales/:input", async(req,res)=>{
       const canal= await Canales.findOne({
         where: {nombre: input}}
        );
-      const idCanal  = canal.id
-  
-      const elementos = await ContactosHasCanales.findAll({
-        where: {canale_id: idCanal}}
-       );
 
-       const elementosId  = elementos.map(elem=>{
-            return elem.contacto_id
-       })
+       if(canal){
+        const idCanal  = canal.id
   
-       const contactos = await Contactos.findAll({
-           where:{id:elementosId},
-           include: [
-               { model: Canales, attributes: ["id", "nombre"] },
-               { model: Ciudades, attributes: ["nombre"] },
-            { model: Companias, attributes: ["nombre"] },
-           ],
+        const elementos = await ContactosHasCanales.findAll({
+          where: {canale_id: idCanal}}
+         );
+  
+         const elementosId  = elementos.map(elem=>{
+              return elem.contacto_id
          })
-  
-       await Promise.all([canal, elementos, contactos]).then(
-        res.status(200).json(contactos)
-       );
+    
+         const contactos = await Contactos.findAll({
+             where:{id:elementosId},
+             include: [
+                 { model: Canales, attributes: ["id", "nombre"] },
+                 { model: Ciudades, attributes: ["nombre"] },
+              { model: Companias, attributes: ["nombre"] },
+             ],
+           })
+    
+         await Promise.all([canal, elementos, contactos]).then(
+          res.status(200).json(contactos)
+         );
+       }else{
+            res.status(200).json([])
+       }
+      
     }catch(error){
       res.status(400).json(error.message)
     }
   });
 
 
+//BUSCADOR POR CIUDAD
+server.get("/buscadorPorCiudades/:input", async(req,res)=>{
+    const input = req.params.input
+    try{
+      const ciudad= await Ciudades.findOne({
+        where: {nombre: input}},
+       );
+
+       if(ciudad){
+        const content  = ciudad.id
+  
+       const contactos = await Contactos.findAll({
+           where:{ciudades_id :content},
+           include: [
+            { model: Canales, attributes: ["id", "nombre"] },
+            { model: Ciudades, attributes: ["nombre"] },
+            { model: Companias, attributes: ["nombre"] },
+        ],
+         })
+  
+  
+       await Promise.all([ciudad, content]).then(
+        res.status(200).json(contactos)
+       );
+       }else{
+            res.status(200).json([])
+
+       }
+    }catch(error){
+      res.status(400).json(error.message)
+    }
+  });
+
+//BUSCADOR POR REGION
+server.get("/buscadorPorRegion/:input", async(req,res)=>{
+    const input = req.params.input
+    try{
+      const region= await Regiones.findOne({
+        where: {nombre: input}},
+       );
+
+       if(region){
+        const content  = region.id
+  
+       const contactos = await Contactos.findAll({
+           where:{regiones_id :content},
+           include: [
+            { model: Canales, attributes: ["id", "nombre"] },
+            { model: Ciudades, attributes: ["nombre"] },
+            { model: Companias, attributes: ["nombre"] },
+        ],
+         })
+  
+  
+       await Promise.all([region, content]).then(
+        res.status(200).json(contactos)
+       );
+       }else{
+        res.status(200).json([])
+
+       }
+      
+  
+  
+    }catch(error){
+      res.status(400).json(error.message)
+    }
+  });
+
+  
+//BUSCADOR COMPAÑIA
+server.get("/buscadorPorCompania/:input", async(req,res)=>{
+    const input = req.params.input
+    try{
+        const compania= await Companias.findOne({
+            where: {nombre: input}}
+        );
+    
+        if(compania){
+            const content  = compania.id
+    
+            const contactos = await Contactos.findAll({
+                where:{companias_id :content},
+                include: [
+                    { model: Canales, attributes: ["id", "nombre"] },
+                    { model: Ciudades, attributes: ["nombre"] },
+                    { model: Companias, attributes: ["nombre"] },  
+                ],
+            })
+    
+            await Promise.all([compania, contactos]).then(
+                res.status(200).json(contactos)
+            );
+        }else{
+            res.status(200).json([])
+        }
+        
+    
+      }catch(error){
+        res.status(400).json(error.message)
+      }
+    });
+
 //NUEVO CONTACTO
 server.post("/contactos/", contactoValidation, async (req, res)=>{
-    const {nombre, apellido, correo, cargo, imagen, interes, ciudades_id, companias_id} = req.body;
+    const {nombre, apellido, correo, cargo, imagen, direccion, ciudades_id, companias_id} = req.body;
     const canales = req.body.canales
     const usuarios_id = req.user.id
     
@@ -767,8 +868,8 @@ server.post("/contactos/", contactoValidation, async (req, res)=>{
             correo,
             cargo,
             imagen,
-            interes,
             ciudades_id,
+            direccion,
             paises_id: pais.id,
             regiones_id: region.id,
             companias_id,
@@ -783,13 +884,13 @@ server.post("/contactos/", contactoValidation, async (req, res)=>{
                 preferencias: canal.preferencias,
                 interes: canal.interes
             },{
-                fields: ["contacto_id","canale_id","cuenta", "preferencias"]
+                fields: ["contacto_id","canale_id","cuenta", "preferencias","interes"]
             });
         }));
 
         res.status(200).json("Contacto creado con éxito")
     } catch (error) {
-        res.status(400).json(error.message)
+        res.status(400).json({error: error.message/* "Deben estar todos los campos completados para continuar" */})
     }
 });
 
@@ -874,44 +975,46 @@ server.delete("/companias/:id", async (req,res) =>{
 
 //AGREGAR COMPANIA
 server.post("/companias", adminValidation,async (req,res) =>{
-    try{const {nombre,direccion, correo, telefono, ciudades_id} = req.body;
+    try{const {nombre,direccion, correo, telefono, ciudades_id, paises_id, regiones_id} = req.body;
     const nuevaCompania = await Companias.create({
         nombre,
         direccion,
         correo,
         telefono,
-        ciudades_id
+        ciudades_id,
+        paises_id,
+        regiones_id
     });
-
+  
     res.status(201).json(nuevaCompania);}
     catch(error){
-        res.status(400).json({error:error.message});
+     res.status(400).json({error:error.message});
     }
-});
+  });
 
 //MODIFICAR COMPANIA
 server.put("/companias/:id", adminValidation, async(req,res)=>{
     const idCompania = req.params.id;
-    const {nombre,direccion, correo, telefono, ciudades_id} = req.body;
+    const {nombre,direccion, correo, telefono, ciudades_id, paises_id, regiones_id} = req.body;
     try {
-        await Companias.update({nombre,direccion, correo, telefono, ciudades_id}, {where:{id: idCompania}});
+        await Companias.update({nombre,direccion, correo, telefono, ciudades_id, paises_id, regiones_id}, {where:{id: idCompania}});
         const compania= await Companias.findOne({where: {id: idCompania}});
         res.status(200).json(compania)
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-  })
+})
 
 //TRAER COMPANIAS
 server.get("/companias", adminValidation, async(req,res)=>{
     try{
-      const arrayCompanias = await Companias.findAll({
-        include:[
-          {model: Ciudades, attributes: ["nombre"]},
-          {model: Paises, attributes: ["nombre"]},
-          {model: Regiones, attributes: ["nombre"]}
-        ]
-      })
+        const arrayCompanias = await Companias.findAll({
+            include:[
+                {model: Ciudades, attributes: ["nombre"]},
+                {model: Paises, attributes: ["nombre"]},
+                {model: Regiones, attributes: ["nombre"]}
+            ]
+        })
       res.status(200).json(arrayCompanias)
     } catch(error){
       res.status(400).json(error.message)
@@ -927,6 +1030,7 @@ server.put("/contactos/:id", async(req,res)=>{
         cargo,
         correo,
         imagen,
+        direccion,
         ciudades_id,
         companias_id,
     } = req.body;
@@ -940,13 +1044,12 @@ server.put("/contactos/:id", async(req,res)=>{
         cargo,
         correo,
         imagen,
+        direccion,
         ciudades_id,
         companias_id,
         },
         {where:{id: idContacto}});
 
-        
-    
         if(ciudades_id){
             const ciudad = await Ciudades.findOne({where:{id: ciudades_id }})
             const pais = await Paises.findOne({where:{id: ciudad.paises_id }})
@@ -975,24 +1078,31 @@ server.put("/contactos/:id", async(req,res)=>{
   })
 
   //MODIFICAR CONTACTOS HAS CANALES (INTERES, CANALES, PREFERENCIAS)
-    server.put("/contactosHasCanales/:idContacto/:idCanal", async(req,res)=>{
+    server.put("/contactosHasCanales/:idContacto", async(req,res)=>{
         const idContacto = req.params.idContacto
-        const idCanal = req.params.idCanal
-        const {interes,preferencias, canale_id, cuenta } = req.body;
+        const canales = req.body.canales
       try {
-          await ContactosHasCanales.update({
-            preferencias,interes, canale_id, cuenta
-        },
-        {where: {
-            contacto_id: idContacto,
-            canale_id: idCanal
-        }}
-        )
+          await ContactosHasCanales.destroy({
+            where:{contacto_id: idContacto}
+            })
 
-        const contacto = await Contactos.findOne({
-            where:{id: idContacto},
-            include:{model:Canales}
-        })
+            await Promise.all(canales.map(async (canal)=>{
+    
+                await ContactosHasCanales.create({
+                    contacto_id: idContacto,
+                    canale_id: canal.canale_id,
+                    cuenta: canal.cuenta,
+                    preferencias: canal.preferencias,
+                    interes: canal.interes
+                },{
+                    fields: ["contacto_id","canale_id","cuenta", "preferencias","interes"]
+                });
+            }));
+
+            const contacto = await Contactos.findOne({
+                    where:{id: idContacto},
+                    include:{model:Canales}
+            })
         
         res.status(200).json(contacto)
 
@@ -1023,8 +1133,32 @@ server.get("/contactos", adminValidation, async(req,res)=>{
     }
 })
 
-// LISTAR LOS CANALES
-server.get("/canales/", async(req,res)=>{
+//OBTENER CONTACTO POR ID
+server.get("/contactos/:id", adminValidation, async(req,res)=>{
+    const id = req.params.id
+    try{
+        const arrayContactos = await Contactos.findAll({
+        where:{
+            usuarios_id: req.user.id,
+            id
+        },
+        include:[
+            {model: Canales},
+            {model: Ciudades},
+            {model: Paises},
+            {model: Regiones},
+            {model: Companias},
+        ]
+    })
+
+        res.status(200).json(arrayContactos)
+    } catch(error){
+        res.status(400).json(error.message)
+    }
+})
+
+// OBTENER TODOS LOS CANALES
+server.get("/canales", async(req,res)=>{
     const canales = await Canales.findAll();
     res.status(200).json(canales)
 });

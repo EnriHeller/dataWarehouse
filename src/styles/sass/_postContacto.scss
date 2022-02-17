@@ -1,0 +1,132 @@
+#postValidation, #editValidation{
+    justify-content: flex-start;
+    width: 80vw;
+    align-items: flex-start;
+    max-height: 100vh;
+}
+
+.newContactForm, .editContactForm{
+    padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.newContactForm > input, .newContactForm  select{
+    height: 20px
+}
+
+.newContactImageContainer, .editContactImageContainer{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 40%;
+    justify-content: center;
+}
+.newContactImageContainer > div,
+.editContactImageContainer > div
+{
+    font-size: 12px;
+}
+.newContactImg, .editContactImg{
+    width: 60%;
+    border-radius: 50%;
+}
+
+#inputImagen{
+    font-size: 10px;
+    font-family: $font1;
+    background-color: $secondary-color;
+    display: flex
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+    width: 20%;
+    font-size: 13px;
+}
+
+.firstFormFather{
+    display: flex;
+    align-items: center;
+    border-style: solid;
+    border-color: $primary-color;
+    padding: 16px;
+    border-radius: 30px;
+    justify-content: space-between;
+}
+
+.firstForm{
+    display: flex;
+    width: 70%;
+    flex-wrap: wrap;
+    height: 40%;
+}
+
+.secondForm{
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.newCanalContainer{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 10px;
+    border-radius: 30px;
+    align-items: center;
+}
+
+.channelButton{
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content:  center;
+}
+
+.newContactButton, .putContactButton{
+    align-self: flex-end;
+    margin: 16px;
+    width: 170px;
+    height: 40px;
+    padding: 8px;
+}
+
+
+
+.endValidationContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    align-self: flex-end;
+}
+
+.errorContainer{
+    text-align: left;
+    color: red;
+    font-size: 16px;
+}
+
+.canalsAndButtons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.allCanalContainer, .allCanalContainerEdit{
+    display: flex;
+    align-items: space-around;
+    width: 80%;
+    flex-direction: column;
+}

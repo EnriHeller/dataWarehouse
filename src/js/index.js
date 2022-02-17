@@ -1,5 +1,26 @@
 const tablaContactos = document.getElementById('tablaContactos')
-const checkContactos = document.getElementById("checkContactos")
+let checkContactos = document.getElementById("checkContactos")
+const newContactMain = document.querySelector("#newContact")
+const messageContainer = document.querySelector(".messageContainer")
+
+const searchInput = document.querySelector(".searchInput")
+const searchButton = document.getElementById("searchButton")
+const inputImagen = document.getElementById("inputImagen")
+
+//validation containers
+const popUpBkg = document.querySelector(".popUpBkg")
+const deleteValidation = document.querySelector("#deleteValidation")
+const postValidation = document.querySelector("#postValidation")
+const editValidation = document.querySelector("#editValidation")
+
+const deleteMessage = document.querySelector("#deleteMessage")
+const deleteButton = document.querySelector("#deleteButton")
+const backButtons = document.querySelectorAll(".backButton")
+const validationsContainer = document.querySelectorAll(".validationContainer")
+
+let idSelected;
+
+//SELECCIONAR TODOS LOS CONTACTOS
 checkContactos.addEventListener("pointerdown", ()=>{
     let checkInputs = document.querySelectorAll(".checkColumn input")
     if(!checkContactos.checked){
@@ -16,6 +37,8 @@ checkContactos.addEventListener("pointerdown", ()=>{
         })
     }
 })
+
+//IMPRIMIR TODOS LOS CONTACTOS
 var myHeaders = new Headers();
 myHeaders.append("Authorization", localStorage.getItem("token"));
 
@@ -27,12 +50,20 @@ var requestOptions = {
 
 fetch("http://localhost:3000/contactos", requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{printContactos(res)}))
-    .catch(error => console.log('error', error));
+    .then((result) => result.json().then((res)=>{
+        popUpBkg.classList.add("opacityInverseAnim")
+        setTimeout(()=>{
+            popUpBkg.style.display = "none"
+            popUpBkg.style.backgroundColor = "#0d093f75" //$pop
+            printContactos(res)
+        },300)
+    }))
+    .catch(()=>{
+        window.location.href = "/login.html"
+    });
 
 
 function printContactos(arrayContactos){
-    console.log(arrayContactos)
     if(arrayContactos.length !== 0){
         arrayContactos.forEach(objetoContacto=>{
             /* get info */
@@ -119,7 +150,15 @@ function printContactos(arrayContactos){
                             let interesBar = document.createElement("div")
                             interesBar.classList.add("interesBar")
                                 let interesBkg = document.createElement("div")
-                                interesBkg.classList.add("interesBkg")
+                                if(interes == '0'){
+                                    interesBkg.classList.add("interesBkg0")
+                                }else if(interes == '25'){
+                                    interesBkg.classList.add("interesBkg25")
+                                }else if(interes == '50'){
+                                    interesBkg.classList.add("interesBkg50")
+                                }else if(interes == '100'){
+                                    interesBkg.classList.add("interesBkg100")
+                                }
 
                             interesColumn.appendChild(interesFatherDiv)
                             interesFatherDiv.appendChild(interesText)
@@ -137,10 +176,73 @@ function printContactos(arrayContactos){
                         editImage.setAttribute("src","./src/img/editIcon.png" )
                         editImage.setAttribute("alt","edit")
 
+                    editButton.addEventListener("pointerdown", ()=>{
+                        idSelected = id
+                        
+                        selectPutPaises.innerHTML = `<option selected disabled>Seleccionar país</option>`
+                        selectPutCiudades.innerHTML = `<option selected disabled>Seleccionar ciudad</option>`
+
+                        var myHeaders = new Headers();
+                        myHeaders.append("Authorization", localStorage.getItem("token"));
+
+                        var requestOptions = {
+                        method: 'GET',
+                        headers: myHeaders,
+                        redirect: 'follow'
+                        };
+
+                        fetch("http://localhost:3000/companias", requestOptions)
+                        .then((response) => {return response})
+                        .then((result) => result.json().then((res)=>{
+                            printPutCompanias(res)}))
+                        .catch(error => console.log('error', error));
+
+                        fetch("http://localhost:3000/regiones", requestOptions)
+                        .then((response) => {return response})
+                        .then((result) => result.json().then((res)=>{
+                            printPutRegiones(res)}))
+                        .catch(error => console.log('error', error));
+
+                        fetch("http://localhost:3000/canales", requestOptions)
+                        .then((response) => {return response})
+                        .then((result) => result.json().then((res)=>{
+                            printCanalesEdit(res)}))
+                        .catch(error => console.log('error', error));
+
+                        printPreferenciasEdit()
+                        printInteresesEdit()
+
+
+                        
+                        printContactValues(id)
+                        
+
+
+
+                        if(popUpBkg.classList.contains("opacityInverseAnim")){
+                            popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
+                        }else{
+                            popUpBkg.classList.add("opacityAnim")
+                        }
+                        popUpBkg.style.display = "flex"
+                        editValidation.style.display = "flex"
+                        
+                    })
+
                     let deleteButton = document.createElement("a")
                     deleteButton.classList.add("deleteButton")
                     deleteButton.addEventListener("click", ()=>{
-                        deleteContacto(id)
+                        if(popUpBkg.classList.contains("opacityInverseAnim")){
+                            popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
+                        }else{
+                            popUpBkg.classList.add("opacityAnim")
+                        }
+                        
+                        popUpBkg.style.display = "flex"
+                        deleteValidation.style.display = "flex"
+                        deleteMessage.innerText = 
+                        `¿Desea eliminar a ${nombre} ${apellido} de su lista de contactos?`
+                        idSelected = id
                     })
                         let deleteImage = document.createElement("img")
                         deleteImage.classList.add("deleteImage")
@@ -190,6 +292,241 @@ function deleteContacto(id){
     
     fetch(`http://localhost:3000/contactos/${id}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{console.log(res)}))
+    .then((result) => result.json().then((res)=>{
+        messageContainer.innerText = res
+        messageContainer.classList.replace("opacityInverseAnim", "opacityAnim")
+        setTimeout(()=>{
+            messageContainer.classList.replace("opacityAnim", "opacityInverseAnim")
+            setTimeout(()=>{
+
+                messageContainer.innerText = ""
+            },300)
+        },2000)
+        updateTable()
+    }))
     .catch(error => console.log('error', error));
 }
+
+newContactMain.addEventListener("pointerdown", ()=>{
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+    };
+
+    allCanalContainer.innerHTML = `
+                        <div id="firstCanal" class="newCanalContainer">
+                            <div class="inputContainer">
+                                <label for="nombreCanal">Canal de contacto:</label>
+                                    <select name="nombreCanal" class="selectCanales">
+                                        <option selected disabled>Seleccionar canal</option>
+                                    </select>
+                            </div>
+        
+                            <div class="inputContainer">
+                                <label for="cuenta">Cuenta de usuario:</label>
+                                    <input type="text" class="inputCuenta" required="true">
+                            </div>
+        
+                            <div class="inputContainer">
+                                <label for="nombreCanal">Preferencias:</label>
+                                <select name="nombreCanal" class="selectPreferencias">
+                                    <option selected disabled>Seleccionar preferencias</option>
+                                </select>
+                            </div>
+        
+                            <div class="inputContainer">
+                                <label for="nombreCanal">Interes:</label>
+                                <select name="nombreCanal" class="selectInteres">
+                                    <option  selected disabled>-</option>
+                                </select>
+                            </div>
+    `
+
+    fetch("http://localhost:3000/companias", requestOptions)
+        .then((response) => {return response})
+        .then((result) => result.json().then((res)=>{
+            printCompanias(res)}))
+        .catch(error => console.log('error', error));
+
+    fetch("http://localhost:3000/regiones", requestOptions)
+        .then((response) => {return response})
+        .then((result) => result.json().then((res)=>{
+            printRegiones(res)}))
+        .catch(error => console.log('error', error));
+
+    fetch("http://localhost:3000/canales", requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{
+        printCanales(res)}))
+    .catch(error => console.log('error', error));
+
+    printPreferencias()
+    printIntereses()
+
+    if(popUpBkg.classList.contains("opacityInverseAnim")){
+        popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
+    }else{
+        popUpBkg.classList.add("opacityAnim")
+    }
+    setTimeout(()=>{
+        popUpBkg.style.display = "flex"
+        postValidation.style.display = "flex"
+    }, 300)
+
+
+})
+
+
+deleteButton.addEventListener("pointerdown",()=>{
+    deleteContacto(idSelected)
+    popUpBkg.classList.add("opacityInverseAnim")
+    setTimeout(()=>{
+        popUpBkg.style.display = "none"
+        deleteValidation.style.display = "none"
+    }, 300)
+})
+
+
+backButtons.forEach(button =>{
+    button.addEventListener("pointerdown", ()=>{
+        popUpBkg.classList.replace("opacityAnim","opacityInverseAnim")
+        setTimeout(()=>{
+        popUpBkg.style.display = "none"
+        validationsContainer.forEach(container=>{
+            container.style.display = "none"
+        })
+        }, 300)
+        
+    })
+})
+
+
+function updateTable(){
+    tablaContactos.innerHTML = `
+    <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+    <div class="columnTitle">Contacto</div>
+    <div class="columnTitle">Pais/Región</div>
+    <div class="columnTitle">Compañia</div>
+    <div class="columnTitle">Cargo</div>
+    <div class="columnTitle">Canal Preferido</div>
+    <div class="columnTitle">Interés</div>
+    <div class="columnTitle">Acciones</div>`
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:3000/contactos", requestOptions)
+        .then((response) => {return response})
+        .then((result) => result.json().then((res)=>{
+            printContactos(res)}))
+        .catch(error => console.log('error', error));
+            
+
+        checkContactos = document.getElementById("checkContactos")
+        checkContactos.addEventListener("pointerdown", ()=>{
+            let checkInputs = document.querySelectorAll(".checkColumn input")
+            if(!checkContactos.checked){
+                checkInputs.forEach(check =>{
+                    if(check !== checkContactos){
+                        check.checked = true
+                    }
+                })
+            }else{
+                checkInputs.forEach(check =>{
+                    if(check !== checkContactos){
+                        check.checked = false
+                    }
+                })
+            }
+        })
+}
+
+function buscador(input){
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+
+    var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+    };
+
+    fetch(`http://localhost:3000/buscar/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+
+    fetch(`http://localhost:3000/buscadorPorPaises/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+
+    fetch(`http://localhost:3000/buscadorPorCiudades/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+
+    fetch(`http://localhost:3000/buscadorPorRegion/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+
+    fetch(`http://localhost:3000/buscadorPorCanales/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+
+    fetch(`http://localhost:3000/buscadorPorCompania/${input}`, requestOptions)
+    .then((response) => {return response})
+    .then((result) => result.json().then((res)=>{res.forEach(array =>{
+                if(array.length !== 0){
+                    console.log(array)
+                }
+            })
+        }
+    ))
+    .catch(error => console.log('error', error));
+}
+
+searchButton.addEventListener("pointerdown", ()=>{
+    buscador(searchInput.value)
+})

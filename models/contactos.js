@@ -14,6 +14,10 @@ const Contactos = sequelize.define("contactos",{
         type: DataTypes.STRING,
         allowNull: false,
     },
+    direccion:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     imagen:{
         type: DataTypes.STRING,
         allowNull: true,

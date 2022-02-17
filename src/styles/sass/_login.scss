@@ -1,0 +1,120 @@
+@import "./variables";
+@import "./mixins";
+
+
+
+//LOGIN
+.loginContainer__main{
+    border-width: 5px;
+    border-color: $primary-color;
+    border-style: solid;
+    border-radius: 30px;
+    width: 30%;
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around ;
+    flex-direction: column;
+    background-color: $primary-color;
+}
+
+.opacityAnim{
+    animation-name: welcome;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+
+}
+
+.opacityInverseAnim{
+    animation-name: login;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+    opacity: 100;
+}
+
+@keyframes welcome {
+    100%{
+        opacity: 100;
+    }
+}
+
+@keyframes login {
+    100%{
+        opacity: 0;
+    }
+}
+
+.loginContainerTitle{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginContainer{
+    background-color: $primary-color;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.line-decoration{
+    margin-top: 25px;
+    width: 0;
+    height: 1px;
+    background-color: $secondary-color;
+    animation-name: lineAnim;
+    animation-duration: 1s;
+    animation-delay: 200ms;
+    animation-fill-mode: forwards;
+    
+}
+
+@keyframes lineAnim{
+    100%{
+        width: 65%
+    }
+}
+.titulo__loginContainer{
+    text-align: center;
+    @include title-style1; 
+}
+
+.loginForm label, .loginButton{
+    font-family: $font1;
+    color: $secondary-color;
+}
+
+.loginForm input{
+    background-color: $secondary-color;
+    border-width: 1px;
+    border-color: $primary-color;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 5px;
+    width: 100%
+}
+
+.loginButton{
+    background-color: transparent;
+    padding: 15px;
+    padding-left: 45px;
+    padding-right: 45px;
+    font-weight: bold;
+    border-style: solid;
+    border-color: $secondary-color;
+    border-radius: 30px;
+    margin-bottom: 30px;
+}
+.loginButton:hover{
+    color: $primary-color;
+    background-color: $secondary-color;
+    cursor: pointer;
+}
+
+.errorContainer{
+    width: 80%;
+    text-align: center;
+    color: red;
+}
+

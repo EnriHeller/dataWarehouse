@@ -1,0 +1,182 @@
+
+#tablaContactos{
+    margin: 20px auto;
+    width: 95%;
+    border-width: 2px;
+    border-color: $primary-color;
+    border-style: solid;
+    display: grid;
+    background-color: $primary-color;
+    grid-template-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
+    grid-gap: 1px;
+}
+#tablaContactos > div {
+    background-color: $secondary-color;
+    font-family: $font1;
+    
+}
+
+#deleteValidation{
+    display: none;
+    flex-direction: column;
+    width: 400px;
+    height: 200px;
+    text-align: center;
+}
+
+.checkColumn{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkInput{
+    margin: auto;
+}
+
+.columnTitle{
+    font-weight: 600;
+    text-align: center;
+}
+
+.contactColumn, .contactData{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.contactImg{
+    width: 63px;
+    border-radius: 50%;
+    height: 70px;
+}
+.contactData{
+    flex-direction: column;
+    width: 60%;
+}
+.subtitle{
+    word-wrap: break-word;
+    font-size: 10px;
+    color: $terciary-color;
+}
+
+.textColumn{
+    padding-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.canalContainer{
+    opacity: 70%;
+    padding: 3px;
+    color: white;
+}
+
+.canalName{
+    background-color: $primary-color;
+    text-align: center;
+    border-radius: 30px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.interesColumn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.interesFatherDiv{
+    display: flex;
+    justify-content: center;
+    width: 100%
+}
+
+.interesBar{
+    width: 70%;
+    height: 20px;
+    margin-left: 6px;
+    border-radius: 30px;
+}
+
+.interesBkg100{
+    width: 100%;
+    height: 20px;
+    background-color: rgb(21, 255, 0);
+    border-radius: 30px;
+}
+.interesBkg75{
+    width: 75%;
+    height: 20px;
+    background-color: rgb(166, 255, 0);
+    border-radius: 30px;
+}
+.interesBkg50{
+    width: 50%;
+    height: 20px;
+    background-color: rgb(255, 230, 0);
+    border-radius: 30px;
+}
+.interesBkg25{
+    width: 25%;
+    height: 20px;
+    background-color: rgb(255, 145, 0);
+    border-radius: 30px;
+}
+.interesBkg0{
+    width: 5%;
+    height: 20px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 30px;
+}
+
+
+
+.actionsColumn{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.editButton, .deleteButton{
+    width: 30%;
+}
+.actionsColumn img{
+    width: 100%;
+}
+
+.contactColumn{
+    height: 90px
+}
+
+.searchInputContainer{
+    border-radius: 30px;
+    border-color: $primary-color;
+    border-style: solid;
+    border-width: 2px;
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+}
+
+.searchInputContainer input{
+    border: none;
+}
+
+#searchButton{
+    background-color: transparent;
+    border: none;
+}
+#searchButton img{
+    width: 20px;
+    margin:2px 2px ;
+}
+
+@media screen and (max-width: 800px){
+    .loginContainer__main{
+        width: 50%
+    }
+}

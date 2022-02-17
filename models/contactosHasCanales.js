@@ -59,4 +59,7 @@ const ContactosHasCanales = sequelize.define("contactos_has_canales", {
 }
 );
 
+
+
+
 module.exports = ContactosHasCanales;

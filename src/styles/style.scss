@@ -9,5 +9,12 @@ body{
     background-color: $secondary-color;
 }
 
+a:hover{
+    cursor:pointer
+}
+
 @import "./sass/header";
-@import "./sass/main";
+@import "./sass/general";
+@import "./sass/login";
+@import "./sass/index";
+@import "./sass/postContacto";

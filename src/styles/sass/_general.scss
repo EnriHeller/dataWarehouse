@@ -1,0 +1,136 @@
+//GENERAL
+.main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+    flex-wrap: wrap;
+    background-color: $secondary-color
+}
+
+.pageTitleContainer{
+    width: 100%;
+    align-self: flex-start;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleInputContainer{
+    display: flex;
+}
+
+
+
+.buttonContainer{
+    border-radius: 30px;
+    border-color: $primary-color;
+    background-color: $secondary-color;
+    color: $primary-color;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: $font1;
+    margin-right: 32px;
+    border-style: solid;
+    height: 35px;
+    width: 120px;
+}
+
+.buttonContainer:hover{
+    background-color: $primary-color;
+    color: $secondary-color;
+    cursor: pointer
+}
+
+.pageTitle{
+    @include title-style1;
+    color: $primary-color;
+    margin-left: 48px;
+    
+}
+
+.messageContainer{
+    color: rgb(17, 202, 17);
+    width: 100%;
+    text-align: center;
+    height: 20px;
+    font-family: $font1;
+    margin-bottom: 20px
+}
+
+.opacityNull{
+    opacity: 0;
+}
+
+.popUpBkg{
+    background-color: $primary-color;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 10000;
+    opacity: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.validationContainer{
+    opacity: 100%;
+    background-color: $secondary-color;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-family: $font1;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: $primary-color;
+    overflow-y: auto;
+    overflow-x:hidden
+    
+}
+.inputImageContact{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.contactTitleContainer{
+    padding:25px;
+    background-color: $primary-color;
+    justify-self: flex-start;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closeButton{
+    background-color: $primary-color;
+    border-style: solid;
+    border-color: $primary-color;
+    width: 20px;
+    height: 20px;
+}
+
+.closeButton:hover{
+    cursor: pointer;
+}
+
+.closeButton img{
+    width: 10px;
+    height: 10px;
+}
+
+.newContactTitle{
+    text-align: left;
+    color: $secondary-color;
+}
+
+
