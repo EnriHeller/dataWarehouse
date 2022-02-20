@@ -1,0 +1,28 @@
+
+#tablaCompanias{
+    margin: 20px auto;
+    width: 95%;
+    border-width: 2px;
+    border-color: $terciary-color;
+    border-style: solid;
+    display: grid;
+    background-color: $terciary-color;
+    grid-template-columns: 0.4fr 0.4fr 0.7fr 0.1fr 0.1fr ;
+    grid-gap: 1px;
+}
+
+#tablaCompanias > div {
+    background-color: $secondary-color;
+    font-family: $font1;
+}
+
+.companyNameColumn, .companyEmailColumn, .companyLocationColumn, .companyTelColumn{
+    padding: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+#postValidation.companyForm1{
+    align-items: center;
+}

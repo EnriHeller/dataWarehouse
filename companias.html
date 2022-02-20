@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/styles/style.css">
+    <title>Data Warehouse</title>
+</head>
+<body>
+    <div class="popUpBkg">
+
+        <div id="deleteValidation" class="validationContainer">
+            <h4 id="deleteMessage"></h4>
+            <div class="buttonsContainer">
+                <button id="deleteButton" class="buttonContainer">Aceptar</button>
+                <button class="buttonContainer backButton">Cancelar</Button>
+            </div>
+        </div>
+
+        <div id="postValidation" class="validationContainer companyForm1">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Nueva compania</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <form class="newContactForm">
+
+                <div class="firstFormFather">
+                    <div class="firstForm" id="userFormFix">
+                        <div class="inputContainer">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre">
+                        </div>
+        
+                        <div class="inputContainer">
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" id="direccion">
+                        </div>
+        
+                        <div class="inputContainer">
+                            <label for="correo">Correo:</label>
+                            <input type="text" id="correo">
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label for="telefono">Telefono:</label>
+                            <input type="tel" name="telefono" id="inputTelefono">
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+                <div class="secondForm">
+                    <div class="inputContainer">
+                        <label for="region">Región:</label>
+                        <select name="region" id="selectRegiones" onchange="printPaises()">
+                            <option selected disabled>Seleccionar región</option>
+                        </select>
+                    </div>
+
+                    <div class=" inputContainer">
+                        <label for="pais">País:</label>
+                        <select name="pais" id="selectPaises" onchange="printCiudades()">
+                            <option selected disabled>Seleccionar país</option>
+                        </select>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label for="ciudad">Ciudad:</label>
+                        <select name="ciudad" id="selectCiudades">
+                            <option selected disabled>Seleccionar ciudad</option>
+                            
+                        </select>
+                    </div>
+
+            </div>
+                
+            </form>
+
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="confirmCompanyButton">Agregar nueva compañia</button>
+            </div>
+        </div>
+
+        <div id="editValidation" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Modificar compañia</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <form class="newContactForm">
+
+                <div class="firstFormFather">
+                    <div class="firstForm" id="userFormFixEdit">
+                        <div class="inputContainer">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombreEdit">
+                        </div>
+        
+                        <div class="inputContainer">
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" id="direccionEdit">
+                        </div>
+        
+                        <div class="inputContainer">
+                            <label for="correo">Correo:</label>
+                            <input type="text" id="correoEdit">
+                        </div>
+                    
+                        <div class="inputContainer">
+                            <label for="telefono">Telefono:</label>
+                            <input type="tel" name="telefono" id="inputTelefonoEdit">
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+                <div class="secondForm">
+                    <div class="inputContainer">
+                        <label for="region">Región:</label>
+                        <select name="region" id="selectRegionesEdit" onchange="printPaises()">
+                            <option selected disabled>Seleccionar región</option>
+                        </select>
+                    </div>
+
+                    <div class=" inputContainer">
+                        <label for="pais">País:</label>
+                        <select name="pais" id="selectPaisesEdit" onchange="printCiudades()">
+                            <option selected disabled>Seleccionar país</option>
+                        </select>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label for="ciudad">Ciudad:</label>
+                        <select name="ciudad" id="selectCiudadesEdit">
+                            <option selected disabled>Seleccionar ciudad</option>
+                            
+                        </select>
+                    </div>
+
+                </div>
+                
+            </form>
+
+            
+            <div class="endValidationContainer" id="endPostContainerEdit">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="editCompanyButton">Modificar</button>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <header class="header">
+        <a href="./index.html" class="logo__header">
+            <img src="./src//img/headerIcon.png" alt="dataWarehouse" class="logoImg">
+        </a>
+
+        <nav class="menuHeader" id="menuHeader">
+            <a href="./index.html" class="option__menuHeader" id="contactsButton">
+                Contactos
+            </a>    
+            <div class="line-decoration-2"></div> 
+
+            <a href="./usuarios.html" class="option__menuHeader" id="usersButton">
+                Usuarios
+            </a>
+            <div class="line-decoration-2"></div>   
+
+            <a href="#" class="option__menuHeader">
+                Compañias
+            </a>
+            <div class="line-decoration-2"></div>  
+
+            <a href="#" class="option__menuHeader">
+                Región / Ciudad
+            </a>
+            <div class="line-decoration-2"></div>  
+            
+        </nav>
+    </header>
+
+    <main class="main">
+        <h2 class="messageContainer opacityInverseAnim"></h2>
+        <div class="pageTitleContainer">
+            <div class="titleInputContainer">
+                <h1 class="pageTitle">Compañias</h1>
+            </div>
+            
+
+            <div class="optionsContainer">
+                
+                <button id="newCompanyButton" class="buttonContainer">Nueva compañia</button>
+            </div>
+            
+        </div>
+
+        <div id="tablaCompanias">
+            <div class="columnTitle">Nombre</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Correo</div>
+            <div class="columnTitle">Teléfono</div>
+            <div class="columnTitle">Acciones</div>
+        </div>
+    </main>
+
+    
+
+    <script src="/src/js/companias.js"></script>
+</body>
+</html>

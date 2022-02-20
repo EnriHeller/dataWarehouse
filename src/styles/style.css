@@ -32,7 +32,8 @@ a:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #17116e;
+  background-color: #221c6d;
+  position: fixed;
 }
 
 .logo__header {
@@ -115,9 +116,9 @@ a:hover {
 
 .buttonContainer {
   border-radius: 30px;
-  border-color: #17116e;
+  border-color: #221c6d;
   background-color: #ffffff;
-  color: #17116e;
+  color: #221c6d;
   font-size: 12px;
   font-weight: 700;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -125,10 +126,19 @@ a:hover {
   border-style: solid;
   height: 35px;
   width: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .buttonContainer:hover {
-  background-color: #17116e;
+  background-color: #221c6d;
   color: #ffffff;
   cursor: pointer;
 }
@@ -137,7 +147,7 @@ a:hover {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   color: #ffffff;
   font-weight: 600;
-  color: #17116e;
+  color: #221c6d;
   margin-left: 48px;
 }
 
@@ -147,7 +157,7 @@ a:hover {
   text-align: center;
   height: 20px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  margin-bottom: 20px;
+  margin-top: 60px;
 }
 
 .opacityNull {
@@ -155,7 +165,7 @@ a:hover {
 }
 
 .popUpBkg {
-  background-color: #17116e;
+  background-color: #221c6d;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -188,7 +198,7 @@ a:hover {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   border-radius: 30px;
   border-style: solid;
-  border-color: #17116e;
+  border-color: #221c6d;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -212,7 +222,7 @@ a:hover {
 
 .contactTitleContainer {
   padding: 25px;
-  background-color: #17116e;
+  background-color: #221c6d;
   justify-self: flex-start;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
@@ -230,9 +240,9 @@ a:hover {
 }
 
 .closeButton {
-  background-color: #17116e;
+  background-color: #221c6d;
   border-style: solid;
-  border-color: #17116e;
+  border-color: #221c6d;
   width: 20px;
   height: 20px;
 }
@@ -253,7 +263,7 @@ a:hover {
 
 .loginContainer__main {
   border-width: 5px;
-  border-color: #17116e;
+  border-color: #221c6d;
   border-style: solid;
   border-radius: 30px;
   width: 30%;
@@ -270,14 +280,15 @@ a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #17116e;
+  background-color: #221c6d;
+  margin-top: 60px;
 }
 
 .opacityAnim {
   -webkit-animation-name: welcome;
           animation-name: welcome;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
   opacity: 0;
@@ -332,7 +343,7 @@ a:hover {
 }
 
 .loginContainer {
-  background-color: #17116e;
+  background-color: #221c6d;
   padding: 20px;
   border-radius: 30px;
 }
@@ -379,7 +390,7 @@ a:hover {
 .loginForm input {
   background-color: #ffffff;
   border-width: 1px;
-  border-color: #17116e;
+  border-color: #221c6d;
   border-style: solid;
   border-radius: 10px;
   padding: 5px;
@@ -399,7 +410,7 @@ a:hover {
 }
 
 .loginButton:hover {
-  color: #17116e;
+  color: #221c6d;
   background-color: #ffffff;
   cursor: pointer;
 }
@@ -414,11 +425,11 @@ a:hover {
   margin: 20px auto;
   width: 95%;
   border-width: 2px;
-  border-color: #17116e;
+  border-color: #97979791;
   border-style: solid;
   display: -ms-grid;
   display: grid;
-  background-color: #17116e;
+  background-color: #97979791;
   -ms-grid-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
       grid-template-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
   grid-gap: 1px;
@@ -429,8 +440,7 @@ a:hover {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-#deleteValidation {
-  display: none;
+#deleteValidation, #deleteSelectionValidation {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -490,7 +500,7 @@ a:hover {
 .subtitle {
   word-wrap: break-word;
   font-size: 10px;
-  color: #646464;
+  color: #97979791;
 }
 
 .textColumn {
@@ -514,7 +524,7 @@ a:hover {
 }
 
 .canalName {
-  background-color: #17116e;
+  background-color: #221c6d;
   text-align: center;
   border-radius: 30px;
   margin-bottom: 5px;
@@ -614,7 +624,7 @@ a:hover {
 
 .searchInputContainer {
   border-radius: 30px;
-  border-color: #17116e;
+  border-color: #221c6d;
   border-style: solid;
   border-width: 2px;
   display: -webkit-box;
@@ -639,10 +649,126 @@ a:hover {
   margin: 2px 2px;
 }
 
+.optionsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#deleteSelectionButton {
+  background-color: #221c6d;
+  border-color: #221c6d;
+  color: #ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  margin: 0 20px;
+  padding: 2px 6px;
+  border-radius: 30px;
+  display: none;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+}
+
+#deleteSelectionButton:hover {
+  cursor: pointer;
+}
+
+.deleteSelectionImg {
+  width: 25px;
+  height: 25px;
+}
+
+.buttonsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 @media screen and (max-width: 800px) {
   .loginContainer__main {
     width: 50%;
   }
+}
+
+#tablaUsuarios {
+  margin: 20px auto;
+  width: 95%;
+  border-width: 2px;
+  border-color: #97979791;
+  border-style: solid;
+  display: -ms-grid;
+  display: grid;
+  background-color: #97979791;
+  -ms-grid-columns: 0.4fr 0.4fr 0.7fr 0.1fr 0.1fr;
+      grid-template-columns: 0.4fr 0.4fr 0.7fr 0.1fr 0.1fr;
+  grid-gap: 1px;
+}
+
+#tablaUsuarios > div {
+  background-color: #ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.userColumn, .userEmailColumn, .perfilColumn, .adminColumn {
+  padding: 20px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.adminColumn img {
+  width: 40px;
+}
+
+#userFormFix, #userFormFixEdit {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100%;
+}
+
+#tablaCompanias {
+  margin: 20px auto;
+  width: 95%;
+  border-width: 2px;
+  border-color: #97979791;
+  border-style: solid;
+  display: -ms-grid;
+  display: grid;
+  background-color: #97979791;
+  -ms-grid-columns: 0.4fr 0.4fr 0.7fr 0.1fr 0.1fr;
+      grid-template-columns: 0.4fr 0.4fr 0.7fr 0.1fr 0.1fr;
+  grid-gap: 1px;
+}
+
+#tablaCompanias > div {
+  background-color: #ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.companyNameColumn, .companyEmailColumn, .companyLocationColumn, .companyTelColumn {
+  padding: 20px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#postValidation.companyForm1 {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #postValidation, #editValidation {
@@ -666,6 +792,9 @@ a:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .newContactForm > input, .newContactForm select {
@@ -727,7 +856,7 @@ a:hover {
       -ms-flex-align: center;
           align-items: center;
   border-style: solid;
-  border-color: #17116e;
+  border-color: #221c6d;
   padding: 16px;
   border-radius: 30px;
   -webkit-box-pack: justify;

@@ -46,7 +46,6 @@ const login = function(){
                 result.json().then((message)=>{
                     errorContainer.innerText = message
                 })
-                
             }
         })
     } catch (error) {

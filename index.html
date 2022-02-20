@@ -8,12 +8,20 @@
     <title>Data Warehouse</title>
 </head>
 <body>
-    <section class="popUpBkg">
+    <div class="popUpBkg">
 
         <div id="deleteValidation" class="validationContainer">
             <h4 id="deleteMessage"></h4>
-            <div>
+            <div class="buttonsContainer">
                 <button id="deleteButton" class="buttonContainer">Aceptar</button>
+                <button class="buttonContainer backButton">Cancelar</Button>
+            </div>
+        </div>
+
+        <div id="deleteSelectionValidation" class="validationContainer">
+            <h4 id="deleteSelectionMessage"></h4>
+            <div class="buttonsContainer">
+                <button id="confirmSelectionButton" class="buttonContainer">Aceptar</button>
                 <button class="buttonContainer backButton">Cancelar</Button>
             </div>
         </div>
@@ -30,7 +38,7 @@
 
                 <div class="firstFormFather">
                     <div class="newContactImageContainer">
-                        <img src="/src/img/defaultContactIcon.png" class="newContactImg" alt="Imagen del contacto">
+                        <img src="/src/img/defaultContactIcon.png" class="newContactImg" alt="Imagen del contacto" id="contactImg">
                         
                     </div>
                     
@@ -237,7 +245,7 @@
                 <button class="buttonContainer putContactButton">Modificar contacto</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <header class="header">
         <a href="./index.html" class="logo__header">
@@ -250,12 +258,12 @@
             </a>    
             <div class="line-decoration-2"></div> 
 
-            <a href="#" class="option__menuHeader" id="usersButton">
+            <a href="/usuarios.html" class="option__menuHeader" id="usersButton">
                 Usuarios
             </a>
             <div class="line-decoration-2"></div>   
 
-            <a href="#" class="option__menuHeader">
+            <a href="/companias.html" class="option__menuHeader">
                 Compañias
             </a>
             <div class="line-decoration-2"></div>  
@@ -264,7 +272,6 @@
                 Región / Ciudad
             </a>
             <div class="line-decoration-2"></div>  
-            
         </nav>
     </header>
 
@@ -275,13 +282,20 @@
                 <h1 class="pageTitle">Contactos</h1>
             </div>
             <div class="searchInputContainer">
-                <input  type="text" placeholder="Buscar">
+                <input  type="text" placeholder="Buscar" id="searchInput">
                 <button id="searchButton">
                     <img src="./src/img/searchIcon.png" alt="Buscar">
                 </button>
             </div>
+
+            <div class="optionsContainer">
+                <button id="deleteSelectionButton">
+                    <img src="./src/img/trashIcon.png" alt="Borrar seleccionados" class="deleteSelectionImg">
+                    <p>3 contactos seleccionados</p>
+                </button>
+                <button id="newContact" class="buttonContainer">Agregar contacto</button>
+            </div>
             
-            <button id="newContact" class="buttonContainer">Agregar contacto</button>
         </div>
 
         <div id="tablaContactos">
@@ -300,8 +314,9 @@
 
     
 
+    <script src="/src/js/index.js"></script>
+    <script src="/src/js/selectContactos.js"></script>
     <script src="/src/js/postContacto.js"></script>
     <script src="/src/js/putContactos.js"></script>
-    <script src="/src/js/index.js"></script>
 </body>
 </html>

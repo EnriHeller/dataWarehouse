@@ -5,6 +5,13 @@ const selectRegiones = document.getElementById("selectRegiones")
 const selectPaises = document.getElementById("selectPaises")
 const selectCiudades = document.getElementById("selectCiudades")
 const errorContainer = document.querySelectorAll(".errorContainer")
+const contactImg = document.getElementById("contactImg")
+
+inputImagen.addEventListener("onchange",()=>{
+    try {
+        contactImg.src = inputImagen.value
+    } catch (error) {}
+})
 
 
 let selectCanales = document.querySelectorAll(".selectCanales")
@@ -39,7 +46,7 @@ const preferencias = [
         let newCorreo = document.getElementById("correo").value
         let newCargo = document.getElementById("cargo").value
         let newDireccion = document.getElementById("inputDireccion").value
-        let newImagen = document.getElementById("inputImagen").value
+        let newImagen = inputImagen.value
         let newCompania = selectCompania.value
         let newContactCiudad = selectCiudades.value
         let newContactCanales = []
@@ -62,10 +69,8 @@ const preferencias = [
                     return canalGuardado
                 }
             })
-            console.log(canalPreExist)
             if(canalPreExist == null){
                 newContactCanales.push(newCanal)
-                console.log(newCanal)
             }
         }
 
@@ -169,7 +174,6 @@ const preferencias = [
     function printPreferencias(){
         selectPreferencias = document.querySelectorAll(".selectPreferencias")
         selectPreferencias.forEach(select =>{
-            console.log(select.children.length)
             if(select.children.length == 1){
                 select.innerHTML = `<option selected disabled>Seleccionar preferencias</option>`
                 preferencias.forEach(preferencia =>{
@@ -278,6 +282,15 @@ const preferencias = [
     
                 `
                 allCanalContainer.appendChild(newCanalContainer)
+                
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", localStorage.getItem('token'));
+                var requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+
                 fetch("http://localhost:3000/canales", requestOptions)
                 .then((response) => {return response})
                 .then((result) => result.json().then((res)=>{

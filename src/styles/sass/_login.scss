@@ -16,11 +16,12 @@
     justify-content: space-around ;
     flex-direction: column;
     background-color: $primary-color;
+    margin-top: 60px;
 }
 
 .opacityAnim{
     animation-name: welcome;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-fill-mode: forwards;
     opacity: 0;
 

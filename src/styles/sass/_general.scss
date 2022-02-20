@@ -36,6 +36,9 @@
     border-style: solid;
     height: 35px;
     width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .buttonContainer:hover{
@@ -57,7 +60,7 @@
     text-align: center;
     height: 20px;
     font-family: $font1;
-    margin-bottom: 20px
+    margin-top: 60px;
 }
 
 .opacityNull{

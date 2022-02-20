@@ -3,26 +3,26 @@
     margin: 20px auto;
     width: 95%;
     border-width: 2px;
-    border-color: $primary-color;
+    border-color: $terciary-color;
     border-style: solid;
     display: grid;
-    background-color: $primary-color;
+    background-color: $terciary-color;
     grid-template-columns: 20px 1.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr 0.3fr;
     grid-gap: 1px;
 }
 #tablaContactos > div {
     background-color: $secondary-color;
     font-family: $font1;
-    
 }
 
-#deleteValidation{
-    display: none;
+#deleteValidation, #deleteSelectionValidation{
     flex-direction: column;
     width: 400px;
     height: 200px;
     text-align: center;
 }
+
+
 
 .checkColumn{
     text-align: center;
@@ -133,8 +133,6 @@
     border-radius: 30px;
 }
 
-
-
 .actionsColumn{
     display: flex;
     justify-content: space-around;
@@ -173,6 +171,38 @@
 #searchButton img{
     width: 20px;
     margin:2px 2px ;
+}
+
+.optionsContainer{
+    display: flex;
+    align-items: center;
+    font-family: $font1;
+}
+
+#deleteSelectionButton{
+    background-color: $primary-color;
+    border-color: $primary-color;
+    color: $secondary-color;
+    font-family: $font1;
+    margin: 0 20px;
+    padding: 2px 6px;
+    border-radius: 30px;
+    display: none;
+    align-items: center;
+    opacity: 0;
+}
+
+#deleteSelectionButton:hover{
+    cursor:pointer
+}
+
+.deleteSelectionImg{
+    width:25px;
+    height:25px
+}
+
+.buttonsContainer{
+    display: flex;
 }
 
 @media screen and (max-width: 800px){

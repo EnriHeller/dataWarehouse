@@ -7,6 +7,7 @@ const putCorreo = document.getElementById("putCorreo")
 const putCargo = document.getElementById("putCargo")
 const putInputImagen = document.getElementById("putInputImagen")
 
+
 const selectPutCompania = document.getElementById("selectPutCompania")
 const selectPutRegiones = document.getElementById("selectPutRegiones")
 const selectPutPaises = document.getElementById("selectPutPaises")
@@ -30,8 +31,8 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
         let newApellido = document.getElementById("putApellido").value
         let newCorreo = document.getElementById("putCorreo").value
         let newCargo = document.getElementById("putCargo").value
+        let newImagen = putInputImagen.value
         let newCompania = selectPutCompania.value
-        console.log(newCompania)
         let newContactCiudad = selectPutCiudades.value
 
         let newContactCanales = []
@@ -39,7 +40,6 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
         let selectInteresEdit = document.querySelectorAll(".selectInteresEdit")
         let selectPreferenciasEdit = document.querySelectorAll(".selectPreferenciasEdit")
         let inputCuentaEdit = document.querySelectorAll(".inputCuentaEdit")
-        console.log(selectCanalEdit.length)
         for (let i = 0; i < selectCanalEdit.length; i++) {
             let newCanal = {
                 canale_id: selectCanalEdit[i].value,
@@ -55,12 +55,12 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
             apellido: newApellido,
             correo: newCorreo,
             cargo: newCargo,
+            imagen: newImagen,
             ciudades_id: parseInt(newContactCiudad),
             companias_id: newCompania,
             canales: newContactCanales
         }
 
-        console.log(newContact.canales)
 
 
         var myHeaders = new Headers();
@@ -78,16 +78,12 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
 
         let contactPromise = fetch(`http://localhost:3000/contactos/${idSelected}`, requestOptions)
         .then((response) => {return response})
-            .then((result) => result.json().then((contacto)=>{
-                console.log(contacto)
-            }))
+            .then((result) => result.json().then())
             .catch(error => console.log('error', error));
 
         let contactCanalsPromise = fetch(`http://localhost:3000/contactosHasCanales/${idSelected}`, requestOptions)
         .then((response) => {return response})
-            .then((result) => result.json().then((contacto)=>{
-                console.log(contacto)
-            }))
+            .then((result) => result.json().then())
             .catch(error => console.log('error', error));
         
         Promise.all([contactPromise, contactCanalsPromise]).then(()=>{
@@ -260,6 +256,15 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
     
                 `
                 allCanalContainerEdit.appendChild(newCanalContainer)
+                
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", localStorage.getItem('token'));
+                var requestOptions = {
+                    method: 'GET',
+                    headers: myHeaders,
+                    redirect: 'follow'
+                };
+
                 fetch("http://localhost:3000/canales", requestOptions)
                 .then((response) => {return response})
                 .then((result) => result.json().then((res)=>{
@@ -279,6 +284,17 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
     }
 
     function printContactValues(id){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", localStorage.getItem("token"));
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+
+
         fetch(`http://localhost:3000/contactos/${id}`, requestOptions)
         .then((response) => {return response})
         .then((result) => result.json().then((res)=>{
@@ -350,10 +366,7 @@ const allCanalContainerEdit = document.querySelector(".allCanalContainerEdit")
 
             printPreferenciasEdit()
             printInteresesEdit()
-
-
-
-
+            checkColumn = document.querySelectorAll(".checkColumn")
             }
         ))
         .catch(error => console.log('error', error));

@@ -3,70 +3,57 @@ let checkContactos = document.getElementById("checkContactos")
 const newContactMain = document.querySelector("#newContact")
 const messageContainer = document.querySelector(".messageContainer")
 
-const searchInput = document.querySelector(".searchInput")
+const searchInput = document.querySelector("#searchInput")
 const searchButton = document.getElementById("searchButton")
 const inputImagen = document.getElementById("inputImagen")
 
 //validation containers
 const popUpBkg = document.querySelector(".popUpBkg")
 const deleteValidation = document.querySelector("#deleteValidation")
+const deleteSelectionValidation = document.querySelector("#deleteSelectionValidation")
 const postValidation = document.querySelector("#postValidation")
 const editValidation = document.querySelector("#editValidation")
 
 const deleteMessage = document.querySelector("#deleteMessage")
 const deleteButton = document.querySelector("#deleteButton")
+const deleteSelectionButton = document.getElementById("deleteSelectionButton")
+const confirmSelectionButton = document.getElementById("confirmSelectionButton")
 const backButtons = document.querySelectorAll(".backButton")
 const validationsContainer = document.querySelectorAll(".validationContainer")
-
 let idSelected;
 
-//SELECCIONAR TODOS LOS CONTACTOS
-checkContactos.addEventListener("pointerdown", ()=>{
-    let checkInputs = document.querySelectorAll(".checkColumn input")
-    if(!checkContactos.checked){
-        checkInputs.forEach(check =>{
-            if(check !== checkContactos){
-                check.checked = true
-            }
-        })
-    }else{
-        checkInputs.forEach(check =>{
-            if(check !== checkContactos){
-                check.checked = false
-            }
-        })
-    }
-})
-
 //IMPRIMIR TODOS LOS CONTACTOS
-var myHeaders = new Headers();
-myHeaders.append("Authorization", localStorage.getItem("token"));
 
-var requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow'
-};
+getContactos()
 
-fetch("http://localhost:3000/contactos", requestOptions)
-    .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{
-        popUpBkg.classList.add("opacityInverseAnim")
-        setTimeout(()=>{
-            popUpBkg.style.display = "none"
-            popUpBkg.style.backgroundColor = "#0d093f75" //$pop
-            printContactos(res)
-        },300)
-    }))
-    .catch(()=>{
-        window.location.href = "/login.html"
-    });
+function getContactos(){
+        var myHeaders = new Headers();
+    myHeaders.append("Authorization", localStorage.getItem("token"));
 
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch("http://localhost:3000/contactos", requestOptions)
+        .then((response) => {return response})
+        .then((result) => result.json().then((res)=>{
+            popUpBkg.classList.add("opacityInverseAnim")
+            setTimeout(()=>{
+                popUpBkg.style.display = "none"
+                popUpBkg.style.backgroundColor = "#0d093f75" //$popup-color
+                printContactos(res)
+            },300)
+        }))
+        .catch(()=>{
+            window.location.href = "/login.html"
+        });
+}
 
 function printContactos(arrayContactos){
     if(arrayContactos.length !== 0){
         arrayContactos.forEach(objetoContacto=>{
-            /* get info */
             var id = objetoContacto.id
             var nombre = objetoContacto.nombre
             var apellido = objetoContacto.apellido
@@ -87,6 +74,8 @@ function printContactos(arrayContactos){
             checkColumn.classList.add("checkColumn")
                 let checkbox = document.createElement("input")
                 checkbox.setAttribute("type", "checkbox")
+                checkbox.setAttribute("contactId", id)
+                
 
             let contactColumn = document.createElement("div")
             contactColumn.classList.add("contactColumn")
@@ -156,15 +145,16 @@ function printContactos(arrayContactos){
                                     interesBkg.classList.add("interesBkg25")
                                 }else if(interes == '50'){
                                     interesBkg.classList.add("interesBkg50")
+                                }else if(interes == '75'){
+                                    interesBkg.classList.add("interesBkg75")
                                 }else if(interes == '100'){
                                     interesBkg.classList.add("interesBkg100")
                                 }
 
-                            interesColumn.appendChild(interesFatherDiv)
-                            interesFatherDiv.appendChild(interesText)
-                            interesFatherDiv.appendChild(interesBar)
+                                interesColumn.appendChild(interesFatherDiv)
+                                interesFatherDiv.appendChild(interesText)
+                                interesFatherDiv.appendChild(interesBar)
                                 interesBar.appendChild(interesBkg)
-
                     })
 
             let actionsColumn = document.createElement("div")
@@ -211,12 +201,7 @@ function printContactos(arrayContactos){
 
                         printPreferenciasEdit()
                         printInteresesEdit()
-
-
-                        
                         printContactValues(id)
-                        
-
 
 
                         if(popUpBkg.classList.contains("opacityInverseAnim")){
@@ -274,8 +259,32 @@ function printContactos(arrayContactos){
 
                         actionsColumn.appendChild(deleteButton)
                             deleteButton.appendChild(deleteImage)
+        })
+        checkColumn = document.querySelectorAll(".checkColumn")
+        checkContactos = document.getElementById("checkContactos")
+        checkInputs = document.querySelectorAll(".checkColumn input")
+        
+        checkColumn.forEach(check =>{
+            check.addEventListener("click",()=>{
+                updateSelectionButton()
+            })
+        })
 
-
+        checkContactos.addEventListener("pointerdown", ()=>{
+            let checkInputs = document.querySelectorAll(".checkColumn input")
+            if(!checkContactos.checked){
+                checkInputs.forEach(check =>{
+                    if(check !== checkContactos){
+                        check.checked = true
+                    }
+                })
+            }else{
+                checkInputs.forEach(check =>{
+                    if(check !== checkContactos){
+                        check.checked = false
+                    }
+                })
+            }
         })
     }
 }
@@ -404,7 +413,6 @@ backButtons.forEach(button =>{
     })
 })
 
-
 function updateTable(){
     tablaContactos.innerHTML = `
     <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
@@ -431,23 +439,7 @@ function updateTable(){
         .catch(error => console.log('error', error));
             
 
-        checkContactos = document.getElementById("checkContactos")
-        checkContactos.addEventListener("pointerdown", ()=>{
-            let checkInputs = document.querySelectorAll(".checkColumn input")
-            if(!checkContactos.checked){
-                checkInputs.forEach(check =>{
-                    if(check !== checkContactos){
-                        check.checked = true
-                    }
-                })
-            }else{
-                checkInputs.forEach(check =>{
-                    if(check !== checkContactos){
-                        check.checked = false
-                    }
-                })
-            }
-        })
+        
 }
 
 function buscador(input){
@@ -464,7 +456,15 @@ function buscador(input){
     .then((response) => {return response})
     .then((result) => result.json().then((res)=>{res.forEach(array =>{
                 if(array.length !== 0){
-                    console.log(array)
+                    tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+                    <div class="columnTitle">Contacto</div>
+                    <div class="columnTitle">Pais/Región</div>
+                    <div class="columnTitle">Compañia</div>
+                    <div class="columnTitle">Cargo</div>
+                    <div class="columnTitle">Canal Preferido</div>
+                    <div class="columnTitle">Interés</div>
+                    <div class="columnTitle">Acciones</div>`
+                    printContactos(array)
                 }
             })
         }
@@ -473,60 +473,114 @@ function buscador(input){
 
     fetch(`http://localhost:3000/buscadorPorPaises/${input}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{res.forEach(array =>{
-                if(array.length !== 0){
-                    console.log(array)
-                }
-            })
+    .then((result) => result.json().then((array)=>{
+            if(array.length !== 0){
+                tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+                <div class="columnTitle">Contacto</div>
+                <div class="columnTitle">Pais/Región</div>
+                <div class="columnTitle">Compañia</div>
+                <div class="columnTitle">Cargo</div>
+                <div class="columnTitle">Canal Preferido</div>
+                <div class="columnTitle">Interés</div>
+                <div class="columnTitle">Acciones</div>`
+                printContactos(array)
+            }
         }
     ))
     .catch(error => console.log('error', error));
 
     fetch(`http://localhost:3000/buscadorPorCiudades/${input}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{res.forEach(array =>{
-                if(array.length !== 0){
-                    console.log(array)
-                }
-            })
+    .then((result) => result.json().then((array)=>{
+        if(array.length !== 0){
+            tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+            <div class="columnTitle">Contacto</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Compañia</div>
+            <div class="columnTitle">Cargo</div>
+            <div class="columnTitle">Canal Preferido</div>
+            <div class="columnTitle">Interés</div>
+            <div class="columnTitle">Acciones</div>`
+            printContactos(array)
         }
-    ))
+    }
+))
     .catch(error => console.log('error', error));
 
     fetch(`http://localhost:3000/buscadorPorRegion/${input}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{res.forEach(array =>{
-                if(array.length !== 0){
-                    console.log(array)
-                }
-            })
+    .then((result) => result.json().then((array)=>{
+        if(array.length !== 0){
+            tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+            <div class="columnTitle">Contacto</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Compañia</div>
+            <div class="columnTitle">Cargo</div>
+            <div class="columnTitle">Canal Preferido</div>
+            <div class="columnTitle">Interés</div>
+            <div class="columnTitle">Acciones</div>`
+            printContactos(array)
         }
-    ))
+    }
+))
     .catch(error => console.log('error', error));
 
     fetch(`http://localhost:3000/buscadorPorCanales/${input}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{res.forEach(array =>{
-                if(array.length !== 0){
-                    console.log(array)
-                }
-            })
+    .then((result) => result.json().then((array)=>{
+        if(array.length !== 0){
+            tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+            <div class="columnTitle">Contacto</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Compañia</div>
+            <div class="columnTitle">Cargo</div>
+            <div class="columnTitle">Canal Preferido</div>
+            <div class="columnTitle">Interés</div>
+            <div class="columnTitle">Acciones</div>`
+            printContactos(array)
         }
-    ))
+    }
+))
     .catch(error => console.log('error', error));
 
     fetch(`http://localhost:3000/buscadorPorCompania/${input}`, requestOptions)
     .then((response) => {return response})
-    .then((result) => result.json().then((res)=>{res.forEach(array =>{
-                if(array.length !== 0){
-                    console.log(array)
-                }
-            })
+    .then((result) => result.json().then((array)=>{
+        if(array.length !== 0){
+            tablaContactos.innerHTML= ` <div class="checkColumn columnTitle"><input type="checkbox" name="checkContactos" id="checkContactos" class="checkInput"></div>
+            <div class="columnTitle">Contacto</div>
+            <div class="columnTitle">Pais/Región</div>
+            <div class="columnTitle">Compañia</div>
+            <div class="columnTitle">Cargo</div>
+            <div class="columnTitle">Canal Preferido</div>
+            <div class="columnTitle">Interés</div>
+            <div class="columnTitle">Acciones</div>`
+            printContactos(array)
         }
-    ))
+    }
+))
     .catch(error => console.log('error', error));
+
+    
+    
 }
 
 searchButton.addEventListener("pointerdown", ()=>{
     buscador(searchInput.value)
+    
 })
+
+searchInput.addEventListener("keypress",(event)=>{
+    if(event.code == "Enter"){
+        buscador(searchInput.value)
+        
+    }
+})
+
+searchInput.addEventListener("keyup",(event)=>{
+    if(searchInput.value == ""){
+        updateTable()
+        
+    }
+})
+
