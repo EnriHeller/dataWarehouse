@@ -1,6 +1,6 @@
 # Data Warehouse
 
-Una herramienta que permite a una compania de marketing administrar todos los contactos de sus clientes, para sus campañas. En ella, se puede crear un usuario que tenga acceso a una base de datos propia, en la que pueda administrar sus contactos, compañias y respectivas locaciones. Se podrán guardar, modificar, editar y eliminar todos los datos alojados.
+Una herramienta que permite a una compania de marketing administrar todos los contactos de sus clientes, para sus campañas. En ella, se puede crear un usuario que tenga acceso a una base de datos propia, en la que podrá administrar sus contactos, compañias y respectivas locaciones. Se podrán guardar, modificar, editar y eliminar todos los datos alojados.
 
 ---
 ## Prerequisitos
