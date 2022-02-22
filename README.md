@@ -1,6 +1,6 @@
 # Data Warehouse
 
-Data warehouse es una herramienta que permite a una compania de marketing administrar todos los contactos de sus clientes, para sus campañas. En ella, se puede crear un usuario que tenga acceso a una base de datos propia, en la que pueda administrar sus contactos, compañias y respectivas locaciones. Se podrán guardar, modificar, editar y eliminar todos los datos alojados.
+Una herramienta que permite a una compania de marketing administrar todos los contactos de sus clientes, para sus campañas. En ella, se puede crear un usuario que tenga acceso a una base de datos propia, en la que pueda administrar sus contactos, compañias y respectivas locaciones. Se podrán guardar, modificar, editar y eliminar todos los datos alojados.
 
 ---
 ## Prerequisitos
@@ -54,22 +54,15 @@ Finalmente, abrir la carpeta *front* en Visual Studio Code y levantar el proyect
 ## Observaciones
 ---
 
+* Se creó un usuario administrador y algunos contactos, compañias y regiones que permitirán probar la herramienta sin inconvenientes. A continuación, se detalla el correo y la contraseña para el usuario por defecto, para hacer un primer ingreso:
+
+```
+correo: default@admin.com
+contraseña: admin
+
+```
+
 * En el caso que se desee correr el servidor en un entorno remoto o
 distinto al definido localmente en este proyecto, en el archivo *.env* dentro de la carpeta *back* se definen las variables de entorno, las cuales se pueden modificar
 sin inconvenientes. Tener en cuenta que también se deberá establecer la conexión pertinente en MySQL Workbench.
 
-* Se creó un usuario administrador y algunos contactos, compañias y regiones que permitirán probar la herramienta sin inconvenientes. A continuación, se detalla el correo y la contraseña para el usuario por defecto, para hacer un primer ingreso:
-
-```
-UPDATE `proyecto-delilah-resto`.`usuarios` SET `esAdmin` = '1' WHERE (`id` = '<id_del_usuario>');
-
--- ---------------------------------------------------------------------
-
-```
-
-* Se incluye el archivo *delilah-resto.postman_collection* para
-ser abierto mediante el software **Postman** y ejecutar las
-peticiones HTPP sin necesidad de tener un entorno desarrollado para ello.
-
-* Para visualizar los endpoints de *spec.yaml* y *spec.json* desde Swagger Editor, es necesario 
- haber levantado el servidor con el comando `npm run dev`
