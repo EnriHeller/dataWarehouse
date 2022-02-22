@@ -39,6 +39,10 @@ function getContactos(){
     fetch("http://localhost:3000/contactos", requestOptions)
         .then((response) => {return response})
         .then((result) => result.json().then((res)=>{
+            if(!res[res.length-1].av){
+                document.getElementById("usersButton").style.display = "none"
+            }
+
             popUpBkg.classList.add("opacityInverseAnim")
             setTimeout(()=>{
                 popUpBkg.style.display = "none"
@@ -54,7 +58,8 @@ function getContactos(){
 function printContactos(arrayContactos){
     if(arrayContactos.length !== 0){
         arrayContactos.forEach(objetoContacto=>{
-            var id = objetoContacto.id
+            if(objetoContacto.nombre){
+                var id = objetoContacto.id
             var nombre = objetoContacto.nombre
             var apellido = objetoContacto.apellido
             var imagen = objetoContacto.imagen
@@ -157,8 +162,8 @@ function printContactos(arrayContactos){
                                 interesBar.appendChild(interesBkg)
                     })
 
-            let actionsColumn = document.createElement("div")
-            actionsColumn.classList.add("actionsColumn")
+                    let actionsColumn = document.createElement("div")
+                    actionsColumn.classList.add("actionsColumn")
                     let editButton = document.createElement("a")
                     editButton.classList.add("editButton")
                         let editImage = document.createElement("img")
@@ -259,6 +264,8 @@ function printContactos(arrayContactos){
 
                         actionsColumn.appendChild(deleteButton)
                             deleteButton.appendChild(deleteImage)
+            }
+            
         })
         checkColumn = document.querySelectorAll(".checkColumn")
         checkContactos = document.getElementById("checkContactos")

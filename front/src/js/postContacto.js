@@ -139,20 +139,24 @@ const preferencias = [
     function printCompanias(companias){
         selectCompania.innerHTML = `<option selected disabled>Seleccionar Compañía</option>`
         companias.forEach(compania =>{
-            let posibleCompania = document.createElement("option")
-            posibleCompania.value = compania.id
-            posibleCompania.text = compania.nombre
-            selectCompania.appendChild(posibleCompania)
+            if(compania.nombre){
+                let posibleCompania = document.createElement("option")
+                posibleCompania.value = compania.id
+                posibleCompania.text = compania.nombre
+                selectCompania.appendChild(posibleCompania)
+            }
         })
     }
     
     function printRegiones(regiones){
         selectRegiones.innerHTML = `<option id="region" selected disabled>Seleccionar región</option>`
         regiones.forEach(region =>{
-            let posibleRegion = document.createElement("option")
-            posibleRegion.value = region.id
-            posibleRegion.text = region.nombre
-            selectRegiones.appendChild(posibleRegion)
+            if(region.nombre){
+                let posibleRegion = document.createElement("option")
+                posibleRegion.value = region.id
+                posibleRegion.text = region.nombre
+                selectRegiones.appendChild(posibleRegion)
+            }
         })
     } 
     

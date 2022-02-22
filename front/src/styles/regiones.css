@@ -1,0 +1,507 @@
+.singOut{
+  width: 20px;
+  height: 20px;  
+}
+
+body{
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+ul {
+    list-style-type: none;
+  }
+    
+  .contenedor-region{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.575);
+    color: #221c6d;
+    border-style: solid;
+    padding: 16px;
+    text-align: center;
+  }
+  
+
+  
+  .contenedor-nombre-ybtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contenedor-pais{
+    margin-left: 100px;
+  }
+  span{
+    margin-left:100px;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
+    height: 30px;
+    border-radius: 5px;
+  }
+  
+  
+  .btn-agregar-pais{
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 5px;
+    background-color:  #1D72C2;
+    padding: 16px;
+  }
+  
+  .btn-agregar-ciudad{
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 5px;
+    height: 26px;
+    width: 200px;
+    background-color: rgb(128, 128, 61);
+    margin-left: 100px;
+    color: white;
+    padding-left: 15px;
+  }
+  
+
+  .actions{
+    display: flex;
+    width: 90%;
+    margin-bottom:70px
+  }
+  
+  
+  
+  
+  
+  
+   /* puse a ultimo momento*/
+  .remove-region{
+    cursor:pointer;
+    font-size: 20px;
+    color:rgba(204, 10, 10, 0.863);
+  }
+  
+  .remove-region:hover{
+    color:rgba(255, 2, 2, 0.863);
+  }
+  /*------------------------------------*/
+  .impresion{
+    margin: auto;
+    margin-top:80px;
+    width: 90vw;
+  }
+  
+  .edit-region{
+    margin-right: 20px;
+  }
+    /*------------- Regions ------------*/
+  #region-ciudad{
+      font-family: 'Open Sans', sans-serif;
+      margin: auto;
+      padding: 2px;
+      width: 95vw;
+      display: flex;
+      justify-content: flex-end;
+  }
+  
+  
+  .add-reg{
+      margin-right: 20px;
+      margin-top: 80px
+  }
+    
+  
+  .add-ctry{
+      cursor:pointer;
+      color:white;
+      padding: 10px 30px;
+      background-color: #1dc21d;
+      border-radius: 5px;
+      border: none;
+  }
+    
+    
+    .add-ctry:hover{
+      background-color: #31cf23;
+    }
+    
+    
+    /*-------------End of regions ------------*/
+    /*------------- Pop up -----------*/
+    
+    #pop-up{
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      display: none;
+    }
+    
+    .pop-up-window { 
+      margin-top:25vh;
+        margin-left:auto;
+        margin-right:auto;
+        width: 50vw;
+        background: white;
+        display:flex;
+        flex-direction:column;
+        border: none;
+        border-radius: 8px;
+        padding: 40px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    
+    #title-name{
+      margin-left:0;
+      margin-bottom: 30px;
+      text-align:left;
+    }
+    
+    .tableDiv{
+      display:flex;
+      flex-direction:column;
+    }
+    
+    .title-name-value{
+      display:none;
+    }
+    
+    #title-input{
+        height: 36px;
+        width:50%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border: none;
+        border-bottom:1px solid #1D72C2;
+        font-size: 0.9rem;
+    }
+    
+    #title-input:focus{
+        outline:none;
+    }
+    
+    .pop-up-btns{
+        display:flex;
+        justify-content:right;
+        margin-top: 20px;
+    }
+    
+    #submit{
+      width: 200px;
+      cursor:pointer;
+      color:white;
+      padding: 15px 30px;
+      background-color: #056b30;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+    }
+    #submit:hover{
+      background-color: #09c256;
+    }
+    #submitEditar{
+      width: 200px;
+      cursor:pointer;
+      color:white;
+      padding: 15px 30px;
+      background-color: #056b30;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+      display: none;
+    }
+    #submitEditar:hover{
+      background-color: #09c256;
+    }
+  
+  
+    
+    .cancel{
+      width: 200px;
+      cursor:pointer;
+      color:white;
+      padding: 15px 30px;
+      background-color: #740404;
+      border-radius: 5px;
+      border: none;
+    }
+    .cancel:hover{
+      background-color: #df1010;
+    }
+    
+    /*------------- End of Pop up -----------*/
+    
+    #region-tab{
+      font-weight: 700;
+    }
+
+/* LOS BOTONES POR DOM*/
+.edit-btn{
+  cursor:pointer;
+  font-size: 20px;
+  margin-right: 25px;
+  color:rgba(22, 105, 212, 0.863);
+}
+
+.edit-btn:hover{
+  color:rgb(0, 188, 245);
+}
+
+
+.remove-btn{
+  cursor:pointer;
+  font-size: 20px;
+  color:rgba(204, 10, 10, 0.863);
+}
+
+.remove-btn:hover{
+  color:rgba(255, 2, 2, 0.863);
+}
+
+/*------------- Pop up confirmar -----------*/
+    
+#pop-up-confirm{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none;
+}
+
+
+#title-name-confirm{
+  margin-left:0;
+  margin-bottom: 30px;
+  text-align:left;
+}
+
+.tableDiv{
+  display:flex;
+  flex-direction:column;
+}
+
+
+
+.pop-up-btns{
+    display:flex;
+    justify-content:right;
+    margin-top: 20px;
+}
+
+#confirmar{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #056b30;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+#confirmar:hover{
+  background-color: #09c256;
+}
+
+
+
+
+#cancelar-confirm{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #740404;
+  border-radius: 5px;
+  border: none;
+}
+#cancelar-confirm:hover{
+  background-color: #df1010;
+}
+
+
+
+/*------------- Pop up editar Pais-----------*/
+    
+#pop-up-editar-pais{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none;
+}
+
+
+#title-name-edit-pais{
+  margin-left:0;
+  margin-bottom: 30px;
+  text-align:left;
+}
+
+.tableDiv{
+  display:flex;
+  flex-direction:column;
+}
+
+
+
+.pop-up-btns{
+    display:flex;
+    justify-content:right;
+    margin-top: 20px;
+}
+
+#editar-pais{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #056b30;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+#editar-pais:hover{
+  background-color: #09c256;
+}
+
+#title-input-edit-pais{
+  height: 36px;
+  width:50%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: none;
+  border-bottom:1px solid #1D72C2;
+  font-size: 0.9rem;
+}
+#agregar-pais{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #056b30;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+#agregar-pais:hover{
+  background-color: #09c256;
+}
+
+
+
+#cancelar-confirm{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #740404;
+  border-radius: 5px;
+  border: none;
+}
+#cancelar-confirm:hover{
+  background-color: #df1010;
+}
+
+
+/*------------- Pop up editar ciudad-----------*/
+    
+#pop-up-editar-ciudad{
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none;
+}
+
+
+#title-name-edit-ciudad{
+  margin-left:0;
+  margin-bottom: 30px;
+  text-align:left;
+}
+
+.tableDiv{
+  display:flex;
+  flex-direction:column;
+}
+
+
+
+.pop-up-btns{
+    display:flex;
+    justify-content:right;
+    margin-top: 20px;
+}
+
+#editar-ciudad{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #056b30;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+#editar-ciudad:hover{
+  background-color: #09c256;
+}
+
+#title-input-edit-ciudad{
+  height: 36px;
+  width:50%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: none;
+  border-bottom:1px solid #1D72C2;
+  font-size: 0.9rem;
+}
+#agregar-ciudad{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #056b30;
+  border-radius: 5px;
+  border: none;
+  margin-right: 10px;
+}
+#agregar-ciudad:hover{
+  background-color: #09c256;
+}
+
+
+
+#cancelar-edit-ciudad{
+  width: 200px;
+  cursor:pointer;
+  color:white;
+  padding: 15px 30px;
+  background-color: #740404;
+  border-radius: 5px;
+  border: none;
+}
+#cancelar-edit-ciudad:hover{
+  background-color: #df1010;
+}

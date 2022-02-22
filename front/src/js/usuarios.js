@@ -24,25 +24,36 @@ function getUsuarios(){
         headers: myHeaders,
         redirect: 'follow'
     };
-
+    let status = false;
     fetch("http://localhost:3000/usuarios", requestOptions)
-        .then((response) => {return response})
+        .then((response) => {
+            if(response.status == 200){
+                status = true
+            }
+            return response
+
+        })
         .then((result) => result.json().then((res)=>{
-            popUpBkg.classList.add("opacityInverseAnim")
-            setTimeout(()=>{
-                popUpBkg.style.display = "none"
-                popUpBkg.style.backgroundColor = "#0d093f75" //$popup-color
-                printUsuarios(res)
-            },300)
+            if(status){
+                popUpBkg.classList.add("opacityInverseAnim")
+                setTimeout(()=>{
+                    popUpBkg.style.display = "none"
+                    popUpBkg.style.backgroundColor = "#0d093f75" //$popup-color
+                    printUsuarios(res)
+                },300)
+            }else{
+                throw new Error(res.error)
+            }
         }))
         .catch((error)=>{
+            console.log(error.message)
             window.location.href = "/index.html"
         });
 }
 
 function printUsuarios(usersArray){
     if(usersArray.length !== 0){
-    
+        console.log(usersArray)
         usersArray.forEach(objetoUser =>{
             
             var id = objetoUser.id

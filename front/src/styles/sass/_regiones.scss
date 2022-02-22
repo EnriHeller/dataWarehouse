@@ -1,0 +1,76 @@
+#contentFather{
+    width: 100%;
+}
+.tablaRegiones, .tablaPaises, .tablaCiudades{
+    margin: 15px auto;
+    width: 95%;
+    border-width: 2px;
+    border-color: $terciary-color;
+    border-style: solid;
+    display: grid;
+    grid-gap: 1px;
+}
+
+#postValidationRegion, #postValidationPais, #postValidationCiudad,
+#editValidationRegion, #editValidationPais, #editValidationCiudad{
+    width: 80%;
+}
+
+.tablaRegiones > div {
+    background-color: $secondary-color;
+    font-family: $font1;
+}
+
+.optionButton{
+    width: auto;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.regionRow, .paisRow,.ciudadRow{
+    display: flex;
+    align-items:center ;
+    justify-content: space-between;
+}
+
+.regionRow{
+    font-size: 20px;
+}
+
+.paisRow{
+    margin: 5px;
+    font-size: 18px;
+}
+
+.ciudadRow{
+    background-color: $secondary-color;
+}
+
+.imgButton{
+    width: 20px;
+}
+
+.locationName,.buttonsContainer{
+    margin: 15px;
+}
+
+.buttonsContainer{
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+}
+
+.nameLocation, .nameLocation input{
+    text-align: center;
+}
+.nameLocation label{
+    font-size: 18px;
+}
+.nameLocation{
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

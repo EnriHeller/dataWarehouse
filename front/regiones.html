@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/styles/style.css">
+    <title>Data Warehouse</title>
+</head>
+<body>
+    <div class="popUpBkg">
+
+        <div id="deleteValidationRegion" class="validationContainer deleteValidation">
+            <h4 id="deleteMessageRegion"></h4>
+            <div class="buttonsContainer">
+                <button id="deleteButtonRegion" class="buttonContainer backButton">Aceptar</button>
+                <button class="buttonContainer backButton">Cancelar</Button>
+            </div>
+        </div>
+
+        <div id="deleteValidationPais" class="validationContainer deleteValidation">
+            <h4 id="deleteMessagePais"></h4>
+            <div class="buttonsContainer">
+                <button id="deleteButtonPais" class="buttonContainer backButton">Aceptar</button>
+                <button class="buttonContainer backButton">Cancelar</Button>
+            </div>
+        </div>
+
+        <div id="deleteValidationCiudad" class="validationContainer deleteValidation">
+            <h4 id="deleteMessageCiudad"></h4>
+            <div class="buttonsContainer">
+                <button id="deleteButtonCiudad" class="buttonContainer backButton">Aceptar</button>
+                <button class="buttonContainer backButton">Cancelar</Button>
+            </div>
+        </div>
+
+        <div id="postValidationRegion" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Nueva región</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombreRegion">Nombre</label>
+                <input type="text" id="nombreRegion">
+            </div>
+            
+
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="confirmRegionButton">Agregar</button>
+            </div>
+
+        </div>
+
+        <div id="postValidationPais" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Nuevo país</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombrePais">Nombre</label>
+                <input type="text" id="nombrePais">
+            </div>
+            
+
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="confirmPaisButton">Agregar</button>
+            </div>
+
+        </div>
+
+        <div id="postValidationCiudad" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Nueva ciudad</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombreCiudad">Nombre</label>
+                <input type="text" id="nombreCiudad">
+            </div>
+            
+
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="confirmCiudadButton">Agregar</button>
+            </div>
+
+        </div>
+
+        <div id="editValidationRegion" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Modificar región</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombreRegionEdit">Nombre</label>
+                <input type="text" id="nombreRegionEdit">
+            </div>
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="editRegionButton">Modificar</button>
+            </div>
+        </div>
+
+        <div id="editValidationPais" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Modificar país</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombrePaisEdit">Nombre</label>
+                <input type="text" id="nombrePaisEdit">
+            </div>
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="editPaisButton">Modificar</button>
+            </div>
+        </div>
+
+        <div id="editValidationCiudad" class="validationContainer">
+            <div class="contactTitleContainer">
+                <h4 class="newContactTitle">Modificar ciudad</h4>
+                <button class="closeButton backButton">
+                    <img src="./src/img/deleteIcon2.png" alt="close">
+                </button>
+            </div>
+
+            <div class="inputContainer nameLocation">
+                <label for="nombreCiudadEdit">Nombre</label>
+                <input type="text" id="nombreCiudadEdit">
+            </div>
+            
+            <div class="endValidationContainer" id="endPostContainer">
+                <p class="errorContainer"></p>
+                <button class="buttonContainer newContactButton" id="editCiudadButton">Modificar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <header class="header">
+        <a href="./index.html" class="logo__header">
+            <img src="./src//img/headerIcon.png" alt="dataWarehouse" class="logoImg">
+        </a>
+
+        <nav class="menuHeader" id="menuHeader">
+            <a href="./index.html" class="option__menuHeader" id="contactsButton">
+                Contactos
+            </a>    
+            <div class="line-decoration-2"></div> 
+
+            <a href="./usuarios.html" class="option__menuHeader" id="usersButton">
+                Usuarios
+            </a>
+            <div class="line-decoration-2"></div>   
+
+            <a href="/companias.html" class="option__menuHeader">
+                Compañias
+            </a>
+            <div class="line-decoration-2"></div>  
+
+            <a href="#" class="option__menuHeader">
+                Región / Ciudad
+            </a>
+            <div class="line-decoration-2"></div>  
+            
+        </nav>
+    </header>
+
+    <main class="main">
+        <h2 class="messageContainer opacityInverseAnim"></h2>
+        <div class="pageTitleContainer">
+            <div class="titleInputContainer">
+                <h1 class="pageTitle">Regiones / Ciudades</h1>
+            </div>
+            
+
+            <div class="optionsContainer">
+                
+                <button id="newRegionButton" class="buttonContainer">Nueva Region</button>
+            </div>
+            
+        </div>
+
+        <div id="contentFather">
+        
+        </div>
+    </main>
+
+    
+
+    <script src="/src/js/regiones.js"></script>
+</body>
+</html>

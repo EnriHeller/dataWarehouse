@@ -33,6 +33,9 @@ function getCompanias(){
     fetch("http://localhost:3000/companias", requestOptions)
         .then((response) => {return response})
         .then((result) => result.json().then((res)=>{
+            if(!res[res.length-1].av){
+                document.getElementById("usersButton").style.display = "none"
+            }
             popUpBkg.classList.add("opacityInverseAnim")
             setTimeout(()=>{
                 popUpBkg.style.display = "none"
@@ -41,8 +44,8 @@ function getCompanias(){
             },300)
         }))
         .catch((error)=>{
-            console.log(error.message)
-            //window.location.href = "/index.html"
+            window.location.href = "/login.html"
+            localStorage.clear()
         });
 }
 
@@ -50,98 +53,100 @@ function printCompanias(companiesArray){
     if(companiesArray.length !== 0){
     
         companiesArray.forEach(objetoUser =>{
+            if(objetoUser.nombre){
+                var id = objetoUser.id
+                var nombre = objetoUser.nombre
+                var pais = objetoUser.paise.nombre
+                var region = objetoUser.regione.nombre
+                var correo = objetoUser.correo
+                var telefono = objetoUser.telefono  
+
+                let companyNameColumn = document.createElement("div")
+                companyNameColumn.classList.add("companyNameColumn")
+                companyNameColumn.innerText = nombre
+
+                let countryColumn = document.createElement("div")
+                countryColumn.classList.add("textColumn")
+
+                    let countryName = document.createElement("p")
+                    countryName.innerText = pais
+
+                    let countryRegion = document.createElement("p")
+                    countryRegion.classList.add("subtitle")
+                    countryRegion.innerText = region
+
+                
+                let companyEmailColumn = document.createElement("div")
+                companyEmailColumn.classList.add("companyEmailColumn")
+                companyEmailColumn.innerText = correo
+
+                let companyTelColumn = document.createElement("div")
+                companyTelColumn.classList.add("companyTelColumn")
+                companyTelColumn.innerText = telefono
+
+
+
+                let actionsColumn = document.createElement("div")
+                actionsColumn.classList.add("actionsColumn")
+                        let editButton = document.createElement("a")
+                        editButton.classList.add("editButton")
+                            let editImage = document.createElement("img")
+                            editImage.classList.add("editImage")
+                            editImage.setAttribute("src","./src/img/editIcon.png" )
+                            editImage.setAttribute("alt","edit")
+
+                            editButton.addEventListener("pointerdown", ()=>{
+                                idSelected = id
+                                //printCompanyValues(idSelected)
+
+                                if(popUpBkg.classList.contains("opacityInverseAnim")){
+                                    popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
+                                }else{
+                                    popUpBkg.classList.add("opacityAnim")
+                                }
+                                popUpBkg.style.display = "flex"
+                                editValidation.style.display = "flex"
+                                
+                            })
+
+                        
+                        let deleteButton = document.createElement("a")
+                        deleteButton.classList.add("deleteButton")
+                            let deleteImage = document.createElement("img")
+                            deleteImage.classList.add("deleteImage")
+
+                            deleteImage.setAttribute("src","./src/img/deleteIcon.png" )
+                            deleteImage.setAttribute("alt","delete")
+
+                            deleteButton.addEventListener("click", ()=>{
+                                if(popUpBkg.classList.contains("opacityInverseAnim")){
+                                    popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
+                                }else{
+                                    popUpBkg.classList.add("opacityAnim")
+                                }
+                                
+                                popUpBkg.style.display = "flex"
+                                deleteValidation.style.display = "flex"
+                                deleteMessage.innerText = 
+                                `¿Desea eliminar a ${nombre} ${apellido} de la lista de usuarios?`
+                                idSelected = id
+                            })
+                        
+
+                tablaCompanias.appendChild(companyNameColumn)
+                tablaCompanias.appendChild(countryColumn)
+                            countryColumn.appendChild(countryName)
+                            countryColumn.appendChild(countryRegion)
+                tablaCompanias.appendChild(companyEmailColumn)
+                tablaCompanias.appendChild(companyTelColumn)
+                tablaCompanias.appendChild(actionsColumn)
+                    actionsColumn.appendChild(editButton)
+                    editButton.appendChild(editImage)
+
+                    actionsColumn.appendChild(deleteButton)
+                    deleteButton.appendChild(deleteImage)
+            }
             
-            var id = objetoUser.id
-            var nombre = objetoUser.nombre
-            var pais = objetoUser.paise.nombre
-            var region = objetoUser.regione.nombre
-            var correo = objetoUser.correo
-            var telefono = objetoUser.telefono  
-
-            let companyNameColumn = document.createElement("div")
-            companyNameColumn.classList.add("companyNameColumn")
-            companyNameColumn.innerText = nombre
-
-            let countryColumn = document.createElement("div")
-            countryColumn.classList.add("textColumn")
-
-                let countryName = document.createElement("p")
-                countryName.innerText = pais
-
-                let countryRegion = document.createElement("p")
-                countryRegion.classList.add("subtitle")
-                countryRegion.innerText = region
-
-            
-            let companyEmailColumn = document.createElement("div")
-            companyEmailColumn.classList.add("companyEmailColumn")
-            companyEmailColumn.innerText = correo
-
-            let companyTelColumn = document.createElement("div")
-            companyTelColumn.classList.add("companyTelColumn")
-            companyTelColumn.innerText = telefono
-
-
-
-            let actionsColumn = document.createElement("div")
-            actionsColumn.classList.add("actionsColumn")
-                    let editButton = document.createElement("a")
-                    editButton.classList.add("editButton")
-                        let editImage = document.createElement("img")
-                        editImage.classList.add("editImage")
-                        editImage.setAttribute("src","./src/img/editIcon.png" )
-                        editImage.setAttribute("alt","edit")
-
-                        editButton.addEventListener("pointerdown", ()=>{
-                            idSelected = id
-                            //printCompanyValues(idSelected)
-
-                            if(popUpBkg.classList.contains("opacityInverseAnim")){
-                                popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
-                            }else{
-                                popUpBkg.classList.add("opacityAnim")
-                            }
-                            popUpBkg.style.display = "flex"
-                            editValidation.style.display = "flex"
-                            
-                        })
-
-                    
-                    let deleteButton = document.createElement("a")
-                    deleteButton.classList.add("deleteButton")
-                        let deleteImage = document.createElement("img")
-                        deleteImage.classList.add("deleteImage")
-
-                        deleteImage.setAttribute("src","./src/img/deleteIcon.png" )
-                        deleteImage.setAttribute("alt","delete")
-
-                        deleteButton.addEventListener("click", ()=>{
-                            if(popUpBkg.classList.contains("opacityInverseAnim")){
-                                popUpBkg.classList.replace("opacityInverseAnim","opacityAnim")
-                            }else{
-                                popUpBkg.classList.add("opacityAnim")
-                            }
-                            
-                            popUpBkg.style.display = "flex"
-                            deleteValidation.style.display = "flex"
-                            deleteMessage.innerText = 
-                            `¿Desea eliminar a ${nombre} ${apellido} de la lista de usuarios?`
-                            idSelected = id
-                        })
-                    
-
-            tablaCompanias.appendChild(companyNameColumn)
-            tablaCompanias.appendChild(countryColumn)
-                        countryColumn.appendChild(countryName)
-                        countryColumn.appendChild(countryRegion)
-            tablaCompanias.appendChild(companyEmailColumn)
-            tablaCompanias.appendChild(companyTelColumn)
-            tablaCompanias.appendChild(actionsColumn)
-                actionsColumn.appendChild(editButton)
-                editButton.appendChild(editImage)
-
-                actionsColumn.appendChild(deleteButton)
-                deleteButton.appendChild(deleteImage)
         })
         
     }
