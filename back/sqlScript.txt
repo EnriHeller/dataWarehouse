@@ -1,0 +1,314 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema data-warehouse
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema data-warehouse
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `data-warehouse` DEFAULT CHARACTER SET utf8 ;
+USE `data-warehouse` ;
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`canales`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`canales` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(450) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`regiones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`regiones` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(400) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`paises`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`paises` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(450) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `regiones_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_paises_regiones_idx` (`regiones_id` ASC),
+  CONSTRAINT `fk_paises_regiones`
+    FOREIGN KEY (`regiones_id`)
+    REFERENCES `data-warehouse`.`regiones` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`ciudades`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`ciudades` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(450) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `paises_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ciudades_paises1_idx` (`paises_id` ASC),
+  CONSTRAINT `fk_ciudades_paises1`
+    FOREIGN KEY (`paises_id`)
+    REFERENCES `data-warehouse`.`paises` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`companias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`companias` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(450) NOT NULL,
+  `direccion` TEXT NOT NULL,
+  `correo` VARCHAR(450) NOT NULL,
+  `telefono` VARCHAR(45) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `paises_id` INT(11) NOT NULL,
+  `ciudades_id` INT(11) NOT NULL,
+  `regiones_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_companias_paises1_idx` (`paises_id` ASC),
+  INDEX `fk_companias_ciudades1_idx` (`ciudades_id` ASC),
+  INDEX `fk_companias_regiones1_idx` (`regiones_id` ASC),
+  CONSTRAINT `fk_companias_paises1`
+    FOREIGN KEY (`paises_id`)
+    REFERENCES `data-warehouse`.`paises` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_companias_ciudades1`
+    FOREIGN KEY (`ciudades_id`)
+    REFERENCES `data-warehouse`.`ciudades` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_companias_regiones1`
+    FOREIGN KEY (`regiones_id`)
+    REFERENCES `data-warehouse`.`regiones` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(300) NOT NULL,
+  `apellido` VARCHAR(100) NOT NULL,
+  `correo` VARCHAR(150) NOT NULL,
+  `perfil` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(450) NOT NULL,
+  `esAdmin` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`contactos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`contactos` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` TEXT NOT NULL,
+  `apellido` TEXT NOT NULL,
+  `cargo` TEXT NOT NULL,
+  `direccion` TEXT NOT NULL,
+  `correo` TEXT NOT NULL,
+  `imagen` TEXT NULL DEFAULT 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzl1hYI13EACgzoNmDu2000L6hXc8DV7qpdg&usqp=CAU',
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `ciudades_id` INT(11) NOT NULL,
+  `paises_id` INT(11) NOT NULL,
+  `regiones_id` INT(11) NOT NULL,
+  `companias_id` INT(11) NOT NULL,
+  `usuarios_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_contactos_ciudades1_idx` (`ciudades_id` ASC),
+  INDEX `fk_contactos_paises1_idx` (`paises_id` ASC),
+  INDEX `fk_contactos_regiones1_idx` (`regiones_id` ASC),
+  INDEX `fk_contactos_companias1_idx` (`companias_id` ASC),
+  INDEX `fk_contactos_usuarios1_idx` (`usuarios_id` ASC),
+  CONSTRAINT `fk_contactos_ciudades1`
+    FOREIGN KEY (`ciudades_id`)
+    REFERENCES `data-warehouse`.`ciudades` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contactos_companias1`
+    FOREIGN KEY (`companias_id`)
+    REFERENCES `data-warehouse`.`companias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contactos_paises1`
+    FOREIGN KEY (`paises_id`)
+    REFERENCES `data-warehouse`.`paises` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contactos_regiones1`
+    FOREIGN KEY (`regiones_id`)
+    REFERENCES `data-warehouse`.`regiones` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contactos_usuarios1`
+    FOREIGN KEY (`usuarios_id`)
+    REFERENCES `data-warehouse`.`usuarios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+-- -----------------------------------------------------
+-- Table `data-warehouse`.`contactos_has_canales`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `data-warehouse`.`contactos_has_canales` (
+  `contacto_id` INT(11) NOT NULL,
+  `canale_id` INT(11) NOT NULL,
+  `interes` ENUM('0', '25', '50', '75', '100') NOT NULL,
+  `cuenta` VARCHAR(450) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP(),
+  `preferencias` ENUM('NO MOLESTAR', 'ACTIVO', 'EN EL TRABAJO', 'AUSENTE') NOT NULL DEFAULT 'ACTIVO',
+  PRIMARY KEY (`contacto_id`, `canale_id`),
+  INDEX `fk_contactos_has_canales_canales1_idx` (`canale_id` ASC),
+  INDEX `fk_contactos_has_canales_contactos1_idx` (`contacto_id` ASC),
+  CONSTRAINT `fk_contactos_has_canales_canales1`
+    FOREIGN KEY (`canale_id`)
+    REFERENCES `data-warehouse`.`canales` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contactos_has_canales_contactos1`
+    FOREIGN KEY (`contacto_id`)
+    REFERENCES `data-warehouse`.`contactos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `data-warehouse`.`usuarios` (`nombre`, `apellido`, `correo`, `perfil`, `contrasena`, `esAdmin`) 
+VALUES ('default', 'admin', 'default@admin.com', 'Soy admin', 'admin', '1');
+
+INSERT INTO `data-warehouse`.`regiones` (`nombre`) VALUES ('Sudamerica');
+INSERT INTO `data-warehouse`.`regiones` (`nombre`) VALUES ('Norteamerica');
+INSERT INTO `data-warehouse`.`regiones` (`nombre`) VALUES ('Europa');
+
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Argentina', '1');
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Colombia', '1');
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Estados Unidos', '2');
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Canadá', '2');
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Francia', '3');
+INSERT INTO `data-warehouse`.`paises` (`nombre`, `regiones_id`) VALUES ('Inglaterra', '3');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Buenos Aires', '1');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Bariloche', '1');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Mar del Plata', '1');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Rosario', '1');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Bogotá', '2');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Medellín', '2');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Cali', '2');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Barranquilla', '2');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Los Ángeles', '3');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Nueva York', '3');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Boston', '3');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('California', '3');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Toronto', '4');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Montreal', '4');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Vancouver', '4');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Ottawa', '4');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Paris', '5');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Marsella', '5');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Lyon', '5');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Toulouse', '5');
+
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Londres', '6');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Cambridge', '6');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Liverpool', '6');
+INSERT INTO `data-warehouse`.`ciudades` (`nombre`, `paises_id`) VALUES ('Manchester', '6');
+
+INSERT INTO `data-warehouse`.`canales` (`nombre`) VALUES ('Whatsapp');
+INSERT INTO `data-warehouse`.`canales` (`nombre`) VALUES ('Facebook');
+INSERT INTO `data-warehouse`.`canales` (`nombre`) VALUES ('Instagram');
+INSERT INTO `data-warehouse`.`canales` (`nombre`) VALUES ('Slack');
+
+
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `paises_id`, `ciudades_id`, `regiones_id`) 
+VALUES ('París Saint-Germain', 'paris 1238', 'paris@gmail.com', '1188227', '5', '17', '3');
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `paises_id`, `ciudades_id`, `regiones_id`) 
+VALUES ('Playstation', 'play 1122', 'laplay@gmail.com', '1188227', '2', '3', '1');
+INSERT INTO `data-warehouse`.`companias` (`nombre`, `direccion`, `correo`, `telefono`, `paises_id`, `ciudades_id`, `regiones_id`) 
+VALUES ('Fox', 'fox 1162', 'fox@gmail.com', '1183227', '2', '3', '1');
+
+INSERT INTO `data-warehouse`.`contactos` (`nombre`, `apellido`, `cargo`, `direccion`, `correo`, `imagen`, `ciudades_id`, `paises_id`, `regiones_id`, `companias_id`, `usuarios_id`) 
+VALUES ('Lionel', 'Messi', 'Futbolista', 'paris 123', 'messi@gmail.com',
+ 'https://img.a.transfermarkt.technology/portrait/big/28003-1631171950.jpg?lm=1', '17', '5', '3', '1', '1');
+ 
+  INSERT INTO `data-warehouse`.`contactos` (`nombre`, `apellido`, `cargo`, `direccion`, `correo`, `imagen`, `ciudades_id`, `paises_id`, `regiones_id`, `companias_id`, `usuarios_id`) 
+ VALUES ('Homero', 'Simpson', 'Empleado', 'Av. Siempre Viva 742', 'homero@gmail.com',
+ 'data:image/jpeg;base64,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',
+ '9', '3', '2', '3', '1');
+ 
+ INSERT INTO `data-warehouse`.`contactos` (`nombre`, `apellido`, `cargo`, `direccion`, `correo`, `imagen`, `ciudades_id`, `paises_id`, `regiones_id`, `companias_id`, `usuarios_id`) 
+VALUES ('Juana', 'Perez', 'Gerente', 'Rivadavia 123', 'jaunsita@gmail.com',
+ '', '1', '1', '1', '2', '1');
+ 
+  INSERT INTO `data-warehouse`.`contactos` (`nombre`, `apellido`, `cargo`, `direccion`, `correo`, `imagen`, `ciudades_id`, `paises_id`, `regiones_id`, `companias_id`, `usuarios_id`) 
+VALUES ('Agustin', 'Rodriguez', 'Comerciante', '9 de Julio 123', 'agus@gmail.com',
+ '', '1', '1', '1', '3', '1');
+ 
+ 
+ INSERT INTO `data-warehouse`.`contactos_has_canales` (`contacto_id`, `canale_id`, `interes`, `cuenta`, `preferencias`)
+ VALUES ('1', '7', '75', '@liomessi', 'NO MOLESTAR');
+ 
+  INSERT INTO `data-warehouse`.`contactos_has_canales` (`contacto_id`, `canale_id`, `interes`, `cuenta`, `preferencias`)
+ VALUES ('2', '5', '25', '112284793', 'AUSENTE');
+   INSERT INTO `data-warehouse`.`contactos_has_canales` (`contacto_id`, `canale_id`, `interes`, `cuenta`, `preferencias`)
+ VALUES ('2', '6', '100', 'Homero Simpson', 'ACTIVO');
+
+    INSERT INTO `data-warehouse`.`contactos_has_canales` (`contacto_id`, `canale_id`, `interes`, `cuenta`, `preferencias`)
+ VALUES ('3', '8', '100', 'Juana', 'ACTIVO');
+ 
+    INSERT INTO `data-warehouse`.`contactos_has_canales` (`contacto_id`, `canale_id`, `interes`, `cuenta`, `preferencias`)
+ VALUES ('4', '8', '50', 'Agustin', 'ACTIVO');

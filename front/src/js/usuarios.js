@@ -36,9 +36,11 @@ function getUsuarios(){
         .then((result) => result.json().then((res)=>{
             if(status){
                 popUpBkg.classList.add("opacityInverseAnim")
+                document.getElementById("loadDiv").classList.add("opacityInverseAnim")
                 setTimeout(()=>{
                     popUpBkg.style.display = "none"
                     popUpBkg.style.backgroundColor = "#0d093f75" //$popup-color
+                    document.getElementById("loadDiv").style.display ="none"
                     printUsuarios(res)
                 },300)
             }else{

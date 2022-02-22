@@ -181,7 +181,7 @@ a:hover {
 }
 
 .popUpBkg {
-  background-color: #221c6d;
+  background-color: white;
   width: 100vw;
   height: 100vh;
   position: fixed;

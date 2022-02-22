@@ -29,7 +29,7 @@ Port: 3306
 Username: root 
 ```
 Habiendolos confirmado, presionar **OK** e ingresar a la conexión dispuesta.
-Una vez echo esto, ejecutar en un script las sentencias escritas en el archivo *sqlScript.txt*. 
+Una vez echo esto, ejecutar en un script las sentencias escritas en el archivo *sqlScript.txt*, alojado en la carpeta *back*. 
 
 Se creará el schema 
 *data-warehouse* (será necesaria la actualización de la lista de schemas para su visualización). 

@@ -37,8 +37,10 @@ function getCompanias(){
                 document.getElementById("usersButton").style.display = "none"
             }
             popUpBkg.classList.add("opacityInverseAnim")
+            document.getElementById("loadDiv").classList.add("opacityInverseAnim")
             setTimeout(()=>{
                 popUpBkg.style.display = "none"
+                document.getElementById("loadDiv").style.display ="none"
                 popUpBkg.style.backgroundColor = "#0d093f75" //$popup-color
                 printCompanias(res)
             },300)
