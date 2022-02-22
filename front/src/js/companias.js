@@ -419,10 +419,12 @@ deleteButton.addEventListener("pointerdown",()=>{
 function printRegiones(regiones){
     selectRegiones.innerHTML = `<option id="region" selected disabled>Seleccionar región</option>`
     regiones.forEach(region =>{
-        let posibleRegion = document.createElement("option")
-        posibleRegion.value = region.id
-        posibleRegion.text = region.nombre
-        selectRegiones.appendChild(posibleRegion)
+        if(region.nombre){
+            let posibleRegion = document.createElement("option")
+            posibleRegion.value = region.id
+            posibleRegion.text = region.nombre
+            selectRegiones.appendChild(posibleRegion)
+        }
     })
 } 
 

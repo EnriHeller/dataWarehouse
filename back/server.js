@@ -613,7 +613,7 @@ server.delete("/ciudades/:id", async (req,res) =>{
     }); 
     } 
   
-    res.status(200).json("La Ciudad fue eliminada");
+    res.status(200).json("Se ha eliminado la ciudad con éxito");
     } catch (error) {
       res.json(error.message)
     }
